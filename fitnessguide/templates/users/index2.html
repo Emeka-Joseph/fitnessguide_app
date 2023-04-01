@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Evaluation | Fitness Guide</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href=" {{url_for('static',filename='assets/css/style.css')}}" type="text/css"/>
+	<link rel="stylesheet" href=" {{url_for('static',filename='assets/bootstrap/css/bootstrap.min.css')}}"/>
+	<link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
 	<style>
 		#mailing{
 			position:relative;
-			left:-30%;
+			left:-30%; 
 		}
 		.tour{
 			z-index:50;
@@ -27,21 +28,23 @@
 	<div>
        <nav>
 			<div id="logo">
-				<img src="assets/images/logo-wide.png" alt="Site logo"/>
+				<img src="{{url_for('static',filename='assets/images/logo-wide.png')}}" alt="Site logo"/>
 			</div>
 			<div id="menu">
 				<ul>
 					<li><a href="#about">About</a></li>&emsp;&nbsp;&emsp;
                     <li><a href="#contact">Contact</a></li>&emsp;&nbsp;&emsp;&emsp;&emsp;
                     <li><a href="#evaluation">Evaluation</a></li>&emsp;&nbsp;&emsp;
+					<li><a href=""> Signup</a> </li>
+					<li><a href=""> Signin</a> </li>
 				</ul>
 			</div>
-			<div id="nav_cta">
+			<div id="nav_cta" class="my-3">
 			<button>TALK TO AN EXPERT</BUTTON>
 			</div>
 	   </nav>
 	   
-	   <div class="hero_flexbox">
+	   <div class="hero_flexbox ">
 			<div class="textbox">
 				<h1>Fitness Evaluation</h1>
 				<p>
@@ -50,8 +53,7 @@
 				</p>
 			</div>
 			
-		<div class="imagebox"
-			style="background-image:url(assets/images/hero.jpg); background-size:cover">
+		<div class="imagebox" style="background-image:url({{url_for('static',filename='assets/images/hero.jpg')}}); background-size:cover">
 		</div>
 	   </div>
 	   
@@ -74,24 +76,24 @@
 		
 		<section id="serv" class="mx-auto mt-5">
 			<section class="service_chart mx-auto" id-="about">
-				<div class="chart1" style="background-color:#f6f8f9">
-					<h2>Sedentry Life Index Evaluation</h2>
-					<p>This is just a placeholder, explaining what the topic means. It would be good if the gap is
-						filled appropriately.
-					</p>
-				</div>
-				<div class="chart2">
-					<h2>Index Lifestyle Test</h2>
-					<p>This is just a placeholder, explaining what the topic means. It would be good if the gap is
-						filled appropriately.
-					</p>
-				</div>
-				<div class="chart3">
-					<h2>Social Readjustment Scale Test</h2>
-					<p>This is just a placeholder, explaining what the topic means. It would be good if the gap is
-						filled appropriately.
-					</p>
-				</div>
+				
+				<a href="{{url_for('employment')}}"> 
+					<div class="chart1">
+						<h2>Sedentry Life Index Evaluation</h2> Click to enter the physical fitness test phase
+					</div>
+				</a>
+
+				<a href="{{url_for('sed_lifestyle')}}"> 
+					<div class="chart2">
+					<h2>Index Lifestyle Test</h2> Click to enter the sedentary lifestyle test phase
+					</div>
+				</a>
+				
+				<a href="{{url_for('social')}}"> 
+					<div class="chart3">
+						<h2>Social Readjustment Scale Test</h2>Click to enter the social readjustment scale test phase
+					</div>
+				</a>
 				<div class="chart4">
 					<section class="inner_flexbox">
 						<div class="inner1" >
@@ -129,14 +131,14 @@
 							<li class="pe-5">Index Lifestyle Test</li>
 							<li class="pe-5">Social Readjustment Scale Test</li>
 						</ol>
-					</p>
-					<button class="test_btn">Take Assessment</button><br><br>
+					</p>  
+					<a href="{{url_for('employment')}}" class="test_btn btn-lg" style="text-decoration: none;"> Take Assessment </a><br> <br>
 					
 					
 					
 				</div>
 				<div class="test_right">
-					<img src="assets/images/intro.jpg" alt="Image" height="530">
+					<img src="{{url_for('static', filename='assets/images/intro.jpg')}}" alt="Image" height="530">
 				</div>
 			</div>
 		</div>
@@ -184,7 +186,7 @@
 			</div>
 			
 			<div class="ad3_box2">
-				<img src="assets/images/hero4.jpg" alt="Image" width="60%"/>
+				<img src=" {{url_for('static', filename='assets/images/hero4.jpg')}} " alt="Image" width="60%"/>
 		</section>
 	   
 	   
@@ -232,9 +234,9 @@
 					Fitness Guide International (FGI) Digital Bridge Institute Stadium Pavilion,
 					Office Complex 10-16, Cappa, Oshodi, Lagos.<br>+234 805 114 0072<br>+234 802 342 2825
 				</p>
-			<img src="assets/images/icons/fb.png" alt="facebook-icon" width="5%" class="icons fb">
-			<img src="assets/images/icons/ig.png" alt="instagram-icon" width="5%" class="icons ig">
-			<img src="assets/images/icons/twi.png" width="5%" alt="twiteer" class="icons twi">
+			<img src=" {{url_for('static', filename='assets/images/icons/fb.png')}}" alt="facebook-icon" width="5%" class="icons fb">
+			<img src=" {{url_for('static', filename='assets/images/icons/ig.png')}}" alt="instagram-icon" width="5%" class="icons ig">
+			<img src=" {{url_for('static', filename='assets/images/icons/twi.png')}}" width="5%" alt="twiteer" class="icons twi">
 		</div>
 						
 		</div>
@@ -246,17 +248,14 @@
 					<li><a href="www.yemi.dev/">Designed By Yemi</a></li>
 				</ul>
 			</ul>
-		<p class="mb-2">FitnessGuide International&copy; &emsp;&#45;&emsp;All Rights Reserved | Designed By Lambdah Technologies&copy;</p>
+		<p class="mb-2">FitnessGuide International&copy; &emsp;&#45;&emsp;All Rights Reserved | Designed By Lambdah Softwares&copy;</p>
 	</div>
 	</div> 
-				
-				  
-				
-				
+	
 	</div>
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" language="javascript" src="assets/js/script.js"></script>
-	<script src="assets/js/jquery-3.6.1.min.js"></script>
+	<script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.min.js')}} "></script>
+	<script type="text/javascript" language="javascript" src="{{url_for('static', filename='assets/js/script.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/js/jquery-3.6.1.min.js')}} "></script>
 			   
 </body>
 				
