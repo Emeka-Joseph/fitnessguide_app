@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Evaluation</title>
     <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
+    <link rel="stylesheet" href=" {{url_for('static',filename='assets/css/style.css')}}" type="text/css"/>
     <style>
         #q1{
             background-color: rgb(250, 249, 251);
@@ -19,16 +20,16 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row" id="row" style="background-color: blue;">
-            <div class="col-md-11 mt-5"id="q1" style="display: flex; justify-content: center;">
+        <div class="row" id="row" style="background-color: rgba(4,167,119,0.38); font-size: smaller;">
+            <h3 class="text-white mt-4 mx-auto"> Social Readjustment Scale Test</h3>
+            <div class="col-md-11 mt-5"id="q1" style="display: flex; justify-content: center; width: 80%; border-radius:6%">
               <form action="{{url_for('social')}}" method="post"> 
                 
                 <table class="my-3 table table-striped">
-                    <h3> Social Readjustment Scale Test</h3>
-                    <h6>Read through the list and select the events which you have experienced in the   last 12 months by checking the applciable event. </h6>
+                    <h6 class="text-black mt-5">Read through the list and select the events which you have experienced in the   last 12 months by checking the applciable event. </h6>
                     <thead>
                         <tr>
-                            <th> S/N</th> 
+                            <th> Serial</th> 
                             <th> Event </th>
                             <th> Response </th>
                         </tr>
@@ -37,231 +38,298 @@
                         <tr>
                             <td> 1 </td>
                             <td> Death of spouse </td>   
-                            <td>  <input type="checkbox" name="dos1" value="100"></td>                                    
+                            <td> <input type="radio" name="dos1" value="100" id="dos1"><label for="dos1">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos1" value="0" id="dos0"><label for="dos0">No</label>
+                            </td>
+                             
+                                                               
                         </tr>  
                         <tr>
                             <td> 2 </td>
                             <td>Divorce </td>   
-                            <td> <input type="checkbox" name="dos2" value="73"></td>                                    
+                            <td> <input type="radio" name="dos2" value="73" id="dos2" id="dos2"><label for="dos2">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos2" value="0" id="dos2b"><label for="dos2b">No</label>
+                            </td>                                    
                         </tr>  
                         <tr>
                             <td> 3 </td>
                             <td> Marital separation</td>   
-                            <td> <input type="checkbox" name="dos3" value="65"></td>                                    
+                            <td> <input type="radio" name="dos3" value="65"  id="dos3"><label for="dos3">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos3" value="0" id="dos3b"><label for="dos3b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 4 </td>
                             <td> Jail term </td>   
-                            <td> <input type="checkbox" name="dos4" value="63"></td>                                    
+                            <td> <input type="radio" name="dos4" value="63" id="dos4"><label for="dos4">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos4" value="0" id="dos4b"><label for="dos4b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 5 </td>
                             <td>Death of close family member</td>   
-                            <td> <input type="checkbox" name="dos5" value="63"></td>                                    
+                            <td> <input type="radio" name="dos5" value="63"  id="dos5"><label for="dos5">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos5" value="0" id="dos5b"><label for="dos5b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 6 </td>
                             <td> Personal injury or illness</td>   
-                            <td> <input type="checkbox" name="dos6" value="53"></td>                                    
+                            <td> <input type="radio" name="dos6" value="53" id="dos6"><label for="dos6">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos6" value="0" id="dos6b"><label for="dos6b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 7 </td>
                             <td> Marriage problem</td>   
-                            <td> <input type="checkbox" name="dos7" value="50"></td>                                    
+                            <td> <input type="radio" name="dos7" value="50" id="dos7"><label for="dos7">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos7" value="0" id="dos7b"><label for="dos7b">No</label> 
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 8 </td>
                             <td> Fired at work</td>   
-                            <td> <input type="checkbox" name="dos8" value="47"></td>                                    
+                            <td> <input type="radio" name="dos8" value="47" id="dos8"><label for="dos8">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos8" value="0" id="dos8b"><label for="dos8b">No</label>
+                            
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 9 </td>
                             <td> Marital reconciliation</td>   
-                            <td> <input type="checkbox" name="dos9" value="45"></td>                                    
+                            <td> <input type="radio" name="dos9" value="45" id="dos9"><label for="dos9">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos9" value="0" id="dos9b"><label for="dos9b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 10 </td>
                             <td> Retirement</td>   
-                            <td> <input type="checkbox" name="dos10" value="45"></td>                                    
+                            <td> <input type="radio" name="dos10" value="45" id="dos10"><label for="dos10">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos10" value="0" id="dos10b"><label for="dos10b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 11 </td>
                             <td> Change in health of family member</td>   
-                            <td> <input type="checkbox" name="dos11" value="44"></td>                                    
+                            <td> <input type="radio" name="dos11" value="44" id="dos11"><label for="dos11">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos11" value="0" id="dos11b"><label for="dos11b">No</label>
+                            
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 12 </td>
                             <td> Pregnancy</td>   
-                            <td> <input type="checkbox" name="dos12" value="40"></td>                                    
+                            <td> <input type="radio" name="dos12" value="40" id="dos12"><label for="dos12">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos12" value="0" id="dos12b"><label for="dos12b">No</label>  </td>                                    
                         </tr>
                         <tr>
                             <td> 13 </td>
                             <td> Sex difficulties</td>   
-                            <td> <input type="checkbox" name="dos13" value="39"></td>                                    
+                            <td> <input type="radio" name="dos13" value="39" id="dos13"><label for="dos13">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos13" value="0" id="dos13b"><label for="dos13b">No</label>  </td>                                    
                         </tr>
                         <tr>
                             <td> 14 </td>
                             <td> Gain of new family member</td>   
-                            <td> <input type="checkbox" name="dos14" value="39"></td>                                    
+                            <td> <input type="radio" name="dos14" value="39" id="dos14"><label for="dos14">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos14" value="0" id="dos14b"><label for="dos14b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 15 </td>
                             <td> Business readjustment</td>   
-                            <td> <input type="checkbox" name="dos15" value="39"></td>                                    
+                            <td> <input type="radio" name="dos15" value="39" id="dos15"><label for="dos15">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos15" value="0" id="dos15b"><label for="dos15b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 16 </td>
-                            <td> Change in financial state</td>   
-                            <td> <input type="checkbox" name="dos16" value="39"></td>                                    
+                            <td> Change in financial state (Negatively)/td>   
+                            <td> <input type="radio" name="dos16" value="39" id="dos16"><label for="dos16">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos16" value="0" id="dos16b"><label for="dos16b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 17 </td>
                             <td> Death of close friend</td>   
-                            <td> <input type="checkbox" name="dos17" value="38"></td>                                    
+                            <td> <input type="radio" name="dos17" value="38" id="dos17"><label for="dos17">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos17" value="0" id="dos17b"><label for="dos17b">No</label>  </td>                                    
                         </tr>
                         <tr>
                             <td> 18 </td>
                             <td> Change to different line of work </td>   
-                            <td> <input type="checkbox" name="dos18" value="36"></td>                                    
+                            <td> <input type="radio" name="dos18" value="36"  id="dos18"><label for="dos18">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos18" value="0" id="dos18b"><label for="dos18b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 19 </td>
                             <td> Several arguments with spouse</td>   
-                            <td> <input type="checkbox" name="dos19" value="35"></td>                                    
+                            <td> <input type="radio" name="dos19" value="35"  id="dos19"><label for="dos19">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos19" value="0" id="dos19b"><label for="dos19b">No</label> 
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 20 </td>
-                            <td> Mortgage of over  N1,000,000</td>   
-                            <td> <input type="checkbox" name="dos20" value="31"></td>                                    
+                            <td> Mortgage of over  N5,000,000</td>   
+                            <td> <input type="radio" name="dos20" value="31" id="dos20"><label for="dos20">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos20" value="0" id="dos20b"><label for="dos20b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 21 </td>
                             <td> Foreclosure of mortgage or loan</td>   
-                            <td> <input type="checkbox" name="dos21" value="30"></td>                                    
+                            <td> <input type="radio" name="dos21" value="30" id="dos21"><label for="dos21">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos21" value="0" id="dos21b"><label for="dos21b">No</label>
+                            </td>                                    
                         </tr>
                         <tr>
                             <td> 22 </td>
-                            <td> Change in responsibilities at work</td>   
-                            <td> <input type="checkbox" name="dos22" value="29"></td>                                    
+                            <td> Increase in responsibilities at work</td>   
+                            <td> <input type="radio" name="dos22" value="29" id="dos22"><label for="dos22">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos22" value="0" id="dos22b"><label for="dos22b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 23 </td>
                             <td> Son or daughter leaving home</td>   
-                            <td> <input type="checkbox" name="dos23" value="29"></td>                                    
+                            <td> <input type="radio" name="dos23" value="29" id="dos23"><label for="dos23">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos23" value="0" id="dos23b"><label for="dos23b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 24</td>
                             <td> Trouble with in-laws</td>   
-                            <td> <input type="checkbox" name="dos24" value="29"></td>                                    
+                            <td> <input type="radio" name="dos24" value="29" id="dos24"><label for="dos24">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos24" value="0" id="dos24b"><label for="dos24b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 25 </td>
-                            <td> Outstanding personal achievement</td>   
-                            <td> <input type="checkbox" name="dos25" value="28"></td>                                    
+                            <td> Decline in personal achievement</td>   
+                            <td> <input type="radio" name="dos25" value="28"  id="dos25"><label for="dos25">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos25" value="0" id="dos25b"><label for="dos25b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 26 </td>
-                            <td> Wife begin or stop work </td>   
-                            <td> <input type="checkbox" name="dos26" value="26"></td>                                    
+                            <td> Spouse begin or stop work </td>   
+                            <td> <input type="radio" name="dos26" value="26" id="dos26"><label for="dos26">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos26" value="0" id="dos26b"><label for="dos26b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 27 </td>
                             <td> Begin or end school</td>   
-                            <td> <input type="checkbox" name="dos27" value="26"></td>                                    
+                            <td> <input type="radio" name="dos27" value="26" id="dos27"><label for="dos27">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos27" value="0" id="dos27b"><label for="dos27b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 28 </td>
-                            <td> Change in living conditions</td>   
-                            <td> <input type="checkbox" name="dos28" value="25"></td>                                    
+                            <td> Change in living conditions negatively</td>   
+                            <td> <input type="radio" name="dos28" value="25" id="dos28"><label for="dos28">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos28" value="0" id="dos28b"><label for="dos28b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 29 </td>
-                            <td> Revision of personal habits</td>   
-                            <td> <input type="checkbox" name="dos29" value="24"></td>                                    
+                            <td> Negative revision of personal habits</td>   
+                            <td> <input type="radio" name="dos29" value="24" id="dos29"><label for="dos29">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos29" value="0" id="dos29b"><label for="dos29b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 30 </td>
                             <td> Trouble with boss</td>   
-                            <td> <input type="checkbox" name="dos30" value="23"></td>                                    
+                            <td> <input type="radio" name="dos30" value="23" id="dos30"><label for="dos30">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos30" value="0" id="dos30b"><label for="dos30b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 31 </td>
-                            <td> Change in work hours or conditions</td>   
-                            <td> <input type="checkbox" name="dos31" value="20"></td>                                    
+                            <td> Change in work hours or conditions (Negatively)</td>   
+                            <td> <input type="radio" name="dos31" value="20" id="dos31"><label for="dos31">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos31" value="0" id="dos31b"><label for="dos31b">No</label></td>                                    
                         </tr>
                          <tr>
                             <td> 32 </td>
                             <td> Change in residence</td>   
-                            <td> <input type="checkbox" name="dos32" value="20"></td>                                    
+                            <td> <input type="radio" name="dos32" value="20" id="dos32"><label for="dos32">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos32" value="0" id="dos32b"><label for="dos32b">No</label></td>                                    
                         </tr>
                          <tr>
                             <td> 33 </td>
                             <td> Change in school</td>   
-                            <td> <input type="checkbox" name="dos33" value="20"></td>                                    
+                            <td> <input type="radio" name="dos33" value="20" id="dos33"><label for="dos33">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos33" value="0" id="dos33b"><label for="dos33b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 34 </td>
                             <td> Change in recreation</td>   
-                            <td> <input type="checkbox" name="dos34" value="19"></td>                                    
+                            <td> <input type="radio" name="dos34" value="19" id="dos34"><label for="dos34">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos34" value="0" id="dos34b"><label for="dos34b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 35 </td>
                             <td> Change in religious activities</td>   
-                            <td> <input type="checkbox" name="dos35" value="19"></td>                                    
+                            <td> <input type="radio" name="dos35" value="19" id="dos35"><label for="dos35">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos35" value="0" id="dos35b"><label for="dos35b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 36 </td>
                             <td> Change in social activities</td>   
-                            <td> <input type="checkbox" name="dos36" value="18"></td>                                    
+                            <td> <input type="radio" name="dos36" value="18" id="dos36"><label for="dos36">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos36" value="0" id="dos36b"><label for="dos36b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 37 </td>
-                            <td> Mortgage or loan less than N 100,000</td>   
-                            <td> <input type="checkbox" name="dos37" value="17"></td>                                    
+                            <td> Mortgage or loan less than N 500,000</td>   
+                            <td> <input type="radio" name="dos37" value="17" id="dos37"><label for="dos37">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos37" value="0" id="dos37b"><label for="dos37b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 38 </td>
                             <td> Change in sleeping habits</td>   
-                            <td> <input type="checkbox" name="dos38" value="16"></td>                                    
+                            <td> <input type="radio" name="dos38" value="16" id="dos38"><label for="dos38">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos38" value="0" id="dos38b"><label for="dos38b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 39 </td>
                             <td> Change in number of family get-togethers</td>   
-                            <td> <input type="checkbox" name="dos39" value="15"></td>                                    
+                            <td> <input type="radio" name="dos39" value="15" id="dos39"><label for="dos39">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos39" value="0" id="dos39b"><label for="dos39b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 40 </td>
                             <td> Change in eating habits</td>   
-                            <td> <input type="checkbox" name="dos40" value="15"></td>                                    
+                            <td> <input type="radio" name="dos40" value="15" id="dos40"><label for="dos40">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos40" value="0" id="dos40b"><label for="dos40b">No</label> </td>                                    
                         </tr>
                         <tr>
                             <td> 41 </td>
                             <td> Vacation</td>   
-                            <td> <input type="checkbox" name="dos41" value="13"></td>                                    
+                            <td> <input type="radio" name="dos41" value="13" id="dos41"><label for="dos41">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos41" value="0" id="dos41b"><label for="dos41b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 42 </td>
                             <td> Christmas  financial challenges </td>   
-                            <td> <input type="checkbox" name="dos42" value="12"></td>                                    
+                            <td> <input type="radio" name="dos42" value="12" id="dos42"><label for="dos42">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos42" value="0" id="dos42b"><label for="dos42b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 43 </td>
                             <td> Id-el mauled financial challenges</td>   
-                            <td> <input type="checkbox" name="dos43" value="12"></td>                                    
+                            <td> <input type="radio" name="dos43" value="12" id="dos43"><label for="dos43">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos43" value="0" id="dos43b"><label for="dos43b">No</label></td>                                    
                         </tr>
                         <tr>
                             <td> 44 </td>
                             <td> Minor violations of the law</td>   
-                            <td> <input type="checkbox" name="dos44" value="11"></td>                                    
+                            <td> <input type="radio" name="dos44" value="11" id="dos44"><label for="dos44">Yes</label> &nbsp; &nbsp;
+                                <input type="radio" name="dos44" value="0" id="dos44b"><label for="dos44b">No</label></td>                                    
                         </tr>
 
                     </tbody>
                     
                 </table> 
-                    <button class="btn btn-outline-warning btn-lg" style="justify-self: center;"> Next </button>
+                    <div class="text-center my-3">
+                    <button class="mainbtn" style="justify-self: center;"> Next </button>
               </form>
-
             </div>
+            <p class="mt-5"></p>
         </div>
     </div>
 </body>

@@ -11,6 +11,13 @@ class Users(db.Model):
     user_phone=db.Column(db.String(120),nullable=True) 
     user_datereg=db.Column(db.DateTime(), default=datetime.utcnow)
     user_pwd=db.Column(db.String(120),nullable=False)
+    social_rs = db.Column(db.Float,nullable=True)
+    sed_ls = db.Column(db.Float,nullable=True)
+    sed_lie = db.Column(db.Integer,nullable=True)
+    
+
+
+
 
 class Admin(db.Model):
     admin_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
@@ -82,9 +89,6 @@ class Social(db.Model):
     life_event = db.Column(db.String(255),nullable=False)
     qstn_value = db.Column(db.Integer,nullable=False)
 
-class Options(db.Model):
-    opt_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    opt_name = db.Column(db.String(50),nullable=False)
 
 
 class Categories(db.Model):
@@ -96,12 +100,12 @@ class Categories(db.Model):
 class Readjustment(db.Model):
     srs_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     srs_name = db.Column(db.String(255),nullable=False)
-    srs_score = db.Column(db.Integer,nullable=True)
+    srs_score = db.Column(db.Float,nullable=True)
 
 
 
 class Results(db.Model):
-    res_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
+    res_sl_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     employment = db.Column(db.Integer,nullable=True)
     environment = db.Column(db.Integer,nullable=True)
     lifestyle = db.Column(db.Integer,nullable=True)
@@ -109,8 +113,24 @@ class Results(db.Model):
     relationship = db.Column(db.Integer,nullable=True)
     symptoms = db.Column(db.Integer,nullable=True)
     social = db.Column(db.Integer,nullable=True)
-    sed_life_hrs = db.Column(db.Integer,nullable=True)
-    sed_life_conval = db.Column(db.Integer,nullable=True)
+    sed_life_hrs = db.Column(db.Float,nullable=True)
+    sed_life_conval = db.Column(db.Float,nullable=True)
     date = db.Column(db.DateTime(),default=datetime.utcnow)
-    user_id = db.Column(db.Integer,nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'),nullable=True)
+
+
+
+
+
+
+
+
+class Contact(db.Model):
+    contact_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
+    contact_email = db.Column(db.String(100),nullable=False)
+    contact_name =db.Column(db.String(255),nullable=True)
+    contact_subject = db.Column(db.String(80),nullable=True)
+    contact_content = db.Column(db.String(255), nullable=True)
+
+
     

@@ -20,12 +20,28 @@
 <body>
     <div class="container-fluid">
         <div class="row" id="row" style="background-color: blue;">
+            {% with c=get_flashed_messages() %}
+                    {% if c %}
+                        {% for msg in c %}
+                            <div class="alert alert-info col-md-5">{{ msg }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             <div class="col-md-11 mt-5"id="q1" style="display: flex; justify-content: center;">
+                
               <form action="{{url_for('sed_lifestyle')}}" method="post"> 
                 
-                <table class="my-3 table table-striped">
-                    <h3> Sedentary Lifestyle Test</h3>
-                    <h5>Write down the time you spend daily</h5>
+                <table class="my-3 table table-striped ">
+                    <h3 style="color: black; padding: 10px;"> Sedentary Lifestyle Test</h3>
+                    <h5 style="color: black; padding: 10px;">In order to take this test you must note the hours or the decimal fraction of the hour (for example: 30 minutes = 0.5, 1 hour = 1 while 1 hour and 30 minutes would be 1.5)</h5>
+                    <div>
+
+                        <input type="text" id="timefit2" style="border-radius: 100%; border: 2px solid blue; height: 50px; width: 50px; position: fixed; margin-left: 50%; text-align: center;" value="" >
+
+                        <p id="timefit" style="height: 50px; position: fixed; color: brown; margin-left: 40%;" class="mt-5">please, review your input, there is only 24hrs/day </p>
+                          
+                    
+                    </div>
                     <thead>
                         <tr>
                             <th> S/N</th> 
@@ -42,12 +58,12 @@
                         <tr>
                             <td> 1 </td>
                             <td> Specify the average number of hours you sleep at night</td>   
-                            <td> <input type="text" name="sl1" id="sl1"></td>                                    
+                            <td> <input type="text" name="sl1" id="sl1" class="sl" required></td>                                    
                         </tr>  
                         <tr>
                             <td> 2 </td>
                             <td> Specify the average number of hours you nap in the day</td>   
-                            <td> <input type="text" name="sl2" id="sl2"></td>                                    
+                            <td> <input type="text" name="sl2" id="sl2" class="sl" required></td>                                    
                         </tr>
 
                         <tr>
@@ -58,27 +74,27 @@
                         <tr>
                             <td> 3 </td>
                             <td> Average number of hours spent sitting daily in the Office</td>   
-                            <td> <input type="text" name="sl3" id="sl3"></td>                                    
+                            <td> <input type="text" name="sl3" id="sl3" class="sl" required></td>                                    
                         </tr>  
                         <tr>
                             <td> 4 </td>
                             <td> Average number of hours spent sitting daily in the Car</td>   
-                            <td> <input type="text" name="sl4" id="sl4"></td>                                    
+                            <td> <input type="text" name="sl4" id="sl4" class="sl" required></td>                                    
                         </tr>
                         <tr>
                             <td> 5 </td>
                             <td> Average number of hours spent sitting daily while eating</td>   
-                            <td> <input type="text" name="sl5" id="sl5"></td>                                    
+                            <td> <input type="text" name="sl5" id="sl5" class="sl" required></td>                                    
                         </tr>
                          <tr>
                             <td> 6 </td>
                             <td> Average number of hours spent sitting daily while watching television</td>   
-                            <td> <input type="text" name="sl6" id="sl6"></td>                                    
+                            <td> <input type="text" name="sl6" id="sl6" class="sl" required></td>                                    
                         </tr>
                         <tr>
                             <td> 7 </td>
                             <td> Average number of hours spent sitting daily while reading/writing </td>   
-                            <td> <input type="text" name="sl7" id="sl7"></td>                                    
+                            <td> <input type="text" name="sl7" id="sl7" class="sl" required></td>                                    
                         </tr>
 
                         <tr>
@@ -89,23 +105,23 @@
                         <tr>
                             <td> 8 </td>
                             <td> Showering, Waiting, work at a counter, etc</td>   
-                            <td> <input type="text" name="sl8" id="sl8"></td>                                    
+                            <td> <input type="text" name="sl8" id="sl8" class="sl" required></td>                                    
                         </tr> 
                         <tr>
                             <td> 9 </td>
                             <td> Walking at 1-2 mph (relaxed rate)</td>   
-                            <td> <input type="text" name="sl9" id="sl9"></td>                                    
+                            <td> <input type="text" name="sl9" id="sl9" class="sl" required></td>                                    
                         </tr> 
                         <tr>
                             <td> 10 </td>
                             <td> Walking at 2-3 mph (quick)</td>   
-                            <td> <input type="text" name="sl10" id="sl10"></td>                                    
+                            <td> <input type="text" name="sl10" id="sl10" class="sl" required></td>                                    
                         </tr>
                         
                         <tr>
                             <td> 11 </td>
                             <td> Walking at 3-4 mph (fast walk)</td>   
-                            <td> <input type="text" name="sl11" id="sl11"></td>                                    
+                            <td> <input type="text" name="sl11" id="sl11" class="sl" required></td>                                    
                         </tr>
 
                         <tr>
@@ -116,7 +132,7 @@
                         <tr>
                             <td> 12 </td>
                             <td> Sweeping, mopping, dusting, other light work</td>   
-                            <td> <input type="text" name="sl12" id="sl12"></td>                                    
+                            <td> <input type="text" name="sl12" id="sl12" class="sl" required></td>                                    
                         </tr> 
 
                         <tr>
@@ -127,7 +143,7 @@
                         <tr>
                             <td> 13 </td>
                             <td> Carpentry, electrical, painting. Etc </td>   
-                            <td> <input type="text" name="sl13" id="sl13"></td>                                    
+                            <td> <input type="text" name="sl13" id="sl13" class="sl" required></td>                                    
                         </tr> 
 
                         <tr>
@@ -138,7 +154,7 @@
                         <tr>
                             <td> 14 </td>
                             <td> Farming, lumberjacking, bricklaying. Etc</td>   
-                            <td> <input type="text" name="sl14" id="sl14"></td>                                    
+                            <td> <input type="text" name="sl14" id="sl14" class="sl" required></td>                                    
                         </tr>
                         
                         <tr>
@@ -149,7 +165,7 @@
                         <tr>
                             <td> 15 </td>
                             <td> Running, swimming, gymnastics, cycling, etc</td>   
-                            <td> <input type="text" name="sl15" id="sl15"></td>                                    
+                            <td> <input type="text" name="sl15" id="sl15" class="sl" required></td>                                    
                         </tr>
 
                         <tr>
@@ -160,7 +176,7 @@
                         <tr>
                             <td> 16 </td>
                             <td> Swimming, athletics, intense cycling, tennis etc</td>   
-                            <td> <input type="text" name="sl16" id="sl16"></td>                                    
+                            <td> <input type="text" name="sl16" id="sl16" class="sl" required></td>                                    
                         </tr>
 
                         <tr>
@@ -171,18 +187,74 @@
                         <tr>
                             <td> 17 </td>
                             <td> Soccer, basketball, handball etc</td>   
-                            <td> <input type="text" name="sl17" id="sl17"></td>                                    
+                            <td> <input type="text" name="sl17" id="sl17" class="sl" required></td>                                    
                         </tr>
               
                         
                     </tbody>
                     
                 </table> 
-                    <button class="btn btn-outline-warning btn-lg" style="justify-self: center;"> Next </button>
+
+                    
+                    <button class="btn btn-outline-primary btn-lg mb-5" style="justify-self: center; margin-left: 45%;" id="nextpage" disabled></button>
               </form>
 
             </div>
         </div>
     </div>
+
+
+    <script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.min.js')}} "></script>
+	<script type="text/javascript" language="javascript" src="{{url_for('static', filename='assets/js/script.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/js/jquery-3.6.1.min.js')}} "></script>
+	<script src=" {{url_for('static',filename='index_test.js')}}" ></script>
+    <script type='text/javascript' language='javascript'>
+        $(document).ready(function(){
+            //alert('I am ready')
+            
+            function calc(){
+               var time1 = $('#sl1').val();
+               var time2 = $('#sl2').val();
+               var time3 = $('#sl3').val();
+               var time4 = $('#sl4').val();
+               var time5 = $('#sl5').val();
+               var time6 = $('#sl6').val();
+               var time7 = $('#sl7').val();
+               var time8 = $('#sl8').val();
+               var time9 = $('#sl9').val();
+               var time10 = $('#sl10').val();
+               var time11 = $('#sl11').val();
+               var time12 = $('#sl12').val();
+               var time13 = $('#sl13').val();
+               var time14 = $('#sl14').val();
+               var time15 = $('#sl15').val();
+               var time16 = $('#sl16').val();
+               var time17 = $('#sl17').val();
+
+               var total = Number(time1) + Number(time2) + Number(time3) + Number(time4) + Number(time5) + Number(time6) + Number(time7) + Number(time8) + Number(time9) + Number(time10) + Number(time11) + Number(time12) + Number(time13) + Number(time14) + Number(time15) + Number(time16) + Number(time17);
+
+                //alert(total);
+                return total;
+            }
+
+            $('.sl').keyup(function(){
+                var check = calc();
+                console.log(check)
+             
+              $('#timefit2').val(check);
+
+            if(check==24){
+                $('#nextpage').html('Next To Result');
+                $('#nextpage').removeAttr('disabled');
+                $('#timefit').hide();
+                
+            }else{
+                $('#nextpage').attr('disabled', 'disabled')
+                $('#nextpage').html('Input must be 24hrs');
+                $('#timefit').show();
+            }
+            })
+        })
+    </script>
 </body>
 </html>

@@ -1,0 +1,98 @@
+{% extends 'users/result.html' %}
+
+{% block result_chart %}  {% endblock %} 
+{% block print_result %} 
+
+<div class="row" style="display: flex; justify-content: center; background-color: aliceblue; color: black; ">
+    <div class="col-md-10" id="result_column" >
+        <h2 class="mt-5" style="color: rgb(13, 0, 0);">Result for the Sedentary Lifestyle Evaluation Assessment</h2>
+            <p class="mx-3" style="color: rgb(14, 0, 0);">
+                Now compare your total points with the graph on the left side of the page. Knowing this information about you would assist your fitness instructor to analyze and prescribe adequate programme. 
+            </p>
+            <h6 class="mt-5" style="color: rgb(7, 0, 0);"> With respect to the Test just carried out, your total score point is {{deets[0]}} </h6>
+            <table class="table table-striped" style="color: rgb(10, 0, 0); text-decoration-color: rgb(12, 0, 0);">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Test</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {% for i in alldeets %} 
+                    {% if loop.index <=6 %}
+                    
+                    <tr >
+                        <td class="cat" style="color: black;">{{loop.index}}</td>
+                        <td class="cat" style="color: black;"> {{i.cat_name.upper()}}  </td>
+                        <td class="cat" style="color: black;"> {{i.cat_point}} </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    <tr >
+                        <td class="cat"></td>
+                        <td class="cat" style="color: black;"> Total  </td>
+                        <td class="cat" style="color: black;"> <h5>{{deets[0]}}</h5> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            
+            <h4 class="mt-5 ppp" style="color: black;">Summary</h4>
+
+            {% if deets[0] <=48 %}
+            <p class="pp mx-3">  
+                <b> Your level of physical fitness and stress is dangerously low.</b>  You need to add some spark to your life in order to live up to your capabilities. 
+                 </p>
+            {% endif %}
+
+            {% if deets[0] > 48 and deets[0]<=72 %}
+            <p class="pp mx-3"  style="color: black;">  
+                <b>You enjoy a low level of physical fitness and stress. </b>  This may be the result of a peaceful environment and a calm personality. Your situation is healthy and you are not in danger of heart attacks, ulcers and other diseases associated with your physical fitness and stress. However, it is possible that you are not accomplishing what you could and that, from time to time, you need to set goals for yourself and push yourself a little harder.  
+                 </p>
+            {% endif %}
+
+            {% if deets[0] >= 72 and deets[0]<=120 %}
+            <p class="pp mx-3"  style="color: black;">  
+                <b>Normal zone.</b> Most people find themselves in this level. Sometimes there is stress and sometimes relaxation. A certain amount of stress is necessary in order to reach our goals but this stress must not be permanent and must be accompanied by periods of rest and relaxation. These alternating circumstances help to form part of a balanced life and <b>physical fitness.</b>  This is a large zone and your points may be close to one of its extremes. If your points are close to the upper extreme, you may want to consider yourself at least partially in zone 3.  
+                 </p>
+            {% endif %}
+
+            {% if deets[0] > 120 and deets[0]<= 144 %}
+            <p class="pp mx-3"  style="color: black;">  
+                <b>This level of physical fitness and stress is considered high.</b> You are receiving a clear warning of danger. Examine each area of your life carefully so you can decide which problems need urgent solutions. You are still able to avoid major psychological problems such as depression, anxiety or the loss of mental abilities. This is the time to change your lifestyle so you can avoid complications in the digestive and circulatory systems. Try to attack the problem from various areas of life: diet, physical exercise, relaxation, emotional support by someone trusted. Adopt a positive attitude and be friendly with others.  
+                 </p>
+            {% endif %}
+
+            {% if deets[0] > 144 %}
+            <p class="pp mx-3"  style="color: black;">  
+                <b>This zone is dangerous.</b>  If you score above 144 points, you are among a small group of people who are experiencing abnormally high levels of <b>physical fitness</b>, stress and multiple problems which need immediate attention. You must seriously decide to get out of this situation before it is too late. Find help. There are situations which one cannot face alone. At times we all need the support of family or friend or even the professional help of a psychologist or psychiatrist. If it is possible change your activities for a few days and try to apply as many of the anti-stress techniques and strategies as possible.  
+                 </p>
+            {% endif %}    
+            
+            <div style="display: flex; justify-content: space-around;">
+                <a href="#" class="btn btn-lg btn-light justify-self-center" id="downloadBtnb">Click Print Result</a>
+
+            
+                <a href="{{url_for('sed_lifestyle')}}" class="btn btn-lg btn-outline-info justify-self-center">Click To Proceed to Index Lifestyle Evaluation</a>
+            </div>
+                 
+        
+        </div>
+
+</div> 
+{% endblock %}
+{% block javascript %}
+	{{super()}}		
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#downloadBtnb').click(function(){
+                window.print()
+            })
+        })
+            
+    </script> 
+{% endblock %}
+</body>
+				
+</html>

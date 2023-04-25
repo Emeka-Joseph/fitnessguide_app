@@ -1,0 +1,85 @@
+{% extends 'users/result.html' %}
+
+{% block result_chart %}  {% endblock %} 
+
+
+{% block print_result %} 
+
+<div class="row" style="display: flex; justify-content: center;">
+    <div class="col-md-10" id="result_column" >
+        <h2 class="mt-5" style="color: white;">Result for the Sedentary Lifestyle Test</h2>
+            
+            <h6 class="mt-5" style="color: white;"><strong style="color:yellow; font-size: 1.4em;"> {{ userdeets.user_fname }} </strong>, with respect to the Test just carried out, your total score point is {{total}} </h6>
+            <table class="table table-striped" style="color: white; text-decoration-color: white;">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Test</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td class="cat"></td>
+                        <td class="cat">  Sedentary Lifestyle Test  </td>
+                        <td class="cat"> {{total}} </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h4 class="mt-5 ppp">Summary</h4>
+
+            {% if total < 30 %}
+            <p class="pp mx-3"> Unless your total is due to a physical impediment you are
+                <b>  in urgent need of exercise</b>
+                 </p>
+            {% endif %}
+
+            {% if total >= 30 and total<=45 %}
+            <p class="pp mx-3">  
+                You lead a sedentary life. Work to solve this problem. Do some kind of <b>physical exercise regularly and according to your ability.</b>  
+                 </p>
+            {% endif %}
+
+            {% if total >= 45 and total<=55 %}
+            <p class="pp mx-3">  
+                You are moderately active and are benefitting from this activity. <b>If you are less than 30 years of age you can increase your activity if you wish. If you are over this age, continue as you are</b> and you will be healthier for it.   
+                 </p>
+            {% endif %}
+
+            {% if total > 55 %}
+            <p class="pp mx-3">  
+                <b>You are well trained.</b> You do not need to increase your physical activity. 
+                 </p>
+            {% endif %}
+
+               
+            
+            <div style="display: flex; justify-content: space-around;">
+                <a href="#" class="btn btn-lg btn-light justify-self-center" id="downloadBtnb">Click Print Result</a> 
+            
+                <a href="{{url_for('social')}}" class="btn btn-lg btn-outline-info justify-self-center">Click to Proceed to Social Readjustment Evaluation</a>
+                
+            </div>
+                 <p class="mb-5"></p>
+        
+        </div>
+
+</div> 
+
+{% endblock %}
+
+{% block javascript %}
+	{{super()}}		
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#downloadBtnb').click(function(){
+                window.print()
+            })
+        })
+            
+    </script> 
+{% endblock %}
+</body>
+				
+</html>

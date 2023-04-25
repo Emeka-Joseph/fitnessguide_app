@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" {{url_for('static',filename='assets/css/style.css')}}" type="text/css"/>
     <title>Fitness Evaluation</title>
     <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
     <style>
@@ -19,15 +20,15 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row" id="row" style="background-color: blue;">
-            <div class="col-md-11 mt-5"id="q1" style="display: flex; justify-content: center;">
+        <div class="row" id="row" style="background-color: rgba(4,167,119,0.38); font-size: smaller;">
+            <h3 class="text-white mt-4 mx-auto"> Environment Test</h3>
+            <div class="col-md-11 mt-3"id="q1" style="display: flex;width:80%; border-radius:6%; justify-content: center;width: 80%;">
               <form action="{{url_for('environment')}}" method="post"> 
                 
                 <table class="my-3 table table-striped">
-                    <h3> Lifestyle Test</h3>
                     <thead>
                         <tr>
-                            <th> S/N</th>
+                            <th> Serial</th>
                             <th> Item </th>
                             <th> Options </th>
                         </tr>
@@ -204,10 +205,12 @@
                     </tbody>
                     
                 </table> 
-                    <button class="btn btn-outline-warning btn-lg" style="justify-self: center;"> Proceed to Lifestyle Test </button>
-              </form>
-
+                    <div class="text-center my-3">
+                    <button class="mainbtn" style="justify-self: center;"> Proceed to Lifestyle Test </button>
+                    </div>
+                </form>
             </div>
+            <p class="mt-5"></p>
         </div>
     </div>
 </body>

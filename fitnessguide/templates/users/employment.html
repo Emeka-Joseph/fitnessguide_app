@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Evaluation</title>
     <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
+    <link rel="stylesheet" href=" {{url_for('static',filename='assets/css/style.css')}}" type="text/css"/>
     <style>
         div{
-            border: 1px solid brown;
+            border: 1px brown;
         }
         #q1{
             background-color: rgb(250, 249, 251);
-            color: aliceblue;
         }
         #row{
             display: flex;
@@ -22,16 +22,24 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row" id="row" style="background-color: blue;">
-            <div class="col-md-11 mt-5"id="q1" style="display: flex; justify-content: center;">
-              <h3> Lifestyle Test</h3>
+        <div class="row" id="row" style="background-color: rgba(4,167,119,0.38); font-size:smaller">
+            <h3 class="mt-4 mx-auto text-white"> Employment Test</h3>
+            {% with c=get_flashed_messages() %}
+            {% if c %}
+                {% for msg in c %}
+                <div class="alert alert-info col-md-5">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="col-md-11 mt-3"id="q1" style="display: flex; border-radius:6%; justify-content: center; width:80%">
+                
               <form action="{{url_for('employment')}}" method="post"> 
                 
                 <table class="my-3 table table-striped">
                     
                     <thead>
                         <tr>
-                            <th> S/N</th>
+                            <th> Serial</th>
                             <th> Item </th>
                             <th> Options </th>
                         </tr>
@@ -39,8 +47,8 @@
                     <tbody>
                         <tr>
                             <td> 1 </td>
-                            <td> My daily work produces a lot of stress</td>   
-                            <td required> <input type="radio" name="q1" value="0" id="a1"><label for="a1">Never</label> &nbsp &nbsp
+                            <td> My daily job activities produces a lot of stress</td>   
+                            <td required> <input type="radio" name="o1" value="0" id="a1"><label for="a1">Never</label> &nbsp &nbsp
                                   <input type="radio" name="q1" value="1" id="b1"> <label for="b1">Almost Never</label> &nbsp &nbsp
                                   <input type="radio" name="q1" value="2" id="c1"><label for="c1">Frequently</label> &nbsp &nbsp
                                   <input type="radio" name="q1" value="3" id="d1"><label for="d1">Almost Always</label>
@@ -208,10 +216,12 @@
                     </tbody>
                     
                 </table> 
-                    <button class="btn btn-outline-warning btn-lg" style="justify-self: center;"> Proceed to Environment Test </button>
+                    <div class="text-center my-3">
+                    <button class="mainbtn" style="justify-self: center;"> Proceed to Environment Test </button>
+                    </div>
               </form>
-
             </div>
+            <p class="mt-5"></p>
         </div>
     </div>
 </body>
