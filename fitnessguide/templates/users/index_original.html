@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Evaluation | Fitness Guide</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href=" {{url_for('static',filename='assets/css/style.css')}}" type="text/css"/>
+	<link rel="stylesheet" href=" {{url_for('static',filename='assets/bootstrap/css/bootstrap.min.css')}}"/>
+	<link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<style>
+		#mailing{
+			position:relative;
+			left:-30%; 
+		}
+		.tour{
+			z-index:50;
+		}
+		.tour:hover{
+			background-color:#fff !important;
+		}
+	</style>	
+</head>
+<body>
+	
+<div class="container">
+	<main>
+		<!--Header-->
+
+	<!-- Replace the current navigation markup with the following -->
+<div class="navbar navbar-expand-md navbar-light bg-light">
+	<a href="#" id="logo"><img src="{{url_for('static',filename='assets/images/logo-wide.png')}}"  class="img-fluid" width="50%" alt="Site_logo"/></a>
+  
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	  <ul class="navbar-nav ms-auto">
+		<li class="nav-item">
+		  <a class="nav-link active" aria-current="page" href="#">Home</a>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link" href="#about">About</a>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link" href="#contact">Contact</a>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link" href="#evaluation">Evaluation</a>
+		</li>
+	  </ul>
+	</div>
+  </div>
+  
+	
+	<!--body-->
+	<div class="row hero_flexbox">
+		<div class="col-md-6">
+			<div  class="textbox mb-3">
+				<h1>Fitness Evaluation</h1>
+				<p>
+					Our comprehensive portfolio offers proven high-value services to ensure optimal
+					customer experiences.
+					<hr>
+				</p>
+			</div>
+		</div>
+
+		<div class="col-md-6">	
+			<div class="imagebox" style="background-image:url({{url_for('static',filename='assets/images/hero.jpg')}}); background-size:cover">
+			</div>
+		</div>	
+	</div>
+	
+		{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			{% for category, message in messages %}
+			<div class="alert alert-{{ category }}">
+				<span style="text-align: center;"> {{ message}} </span> 
+			</div>
+			{% endfor %}
+		{% endif %}
+		{% endwith %}
+	
+	<div class="row">
+		<div class="col-md-12">
+	
+			<h2 id="welcome_msg">Congratulations on Your Decision to Pursue a Healthier, More Active &amp; Energized Lifestyle</h2>
+		</div>
+		<div class="col-md-6 mt-5">
+						<img src="" alt="" name="slide" class="img-fluid mb-5" height="400" width="100%">
+		</div>
+		<div class="col-md-6">
+			<p class="mx-auto mt-3">
+				We will do everything we can to ensure that you feel welcome, comfortable and healthy. Our mission is to create the best physical fitness evaluation experience possible so that you look forward to coming in to see and recommend us to others. This means extraordinary customer service, functional physical fitness evaluation facilities and fitness professionals, who are not only experts in their field, but truly caring people too.<br><br>
+				You may be asking yourself, with so many services available, where do I begin? The Fitness Assessment decision is a great start. We are dedicated to providing appropriate recommendations by reviewing your health and physical fitness questionnaire and performing various assessments and measurements. The recommendations will be based on your individual needs to help you successfully reach your short and long term fitness goals. Some individuals prefer to have a programme being design for them to achieve success; some prefer group fitness or participate in sport programs, while others prefer to try it on their own. We would make sure you get started in the right direction in order not to over exercise or under exercise.<br><br>
+				We love having open communication with our clients! Feel free to contact us with any suggestions or concerns. Rest assured, we appreciate your comments and will use your feedback to enhance our services for the betterment of all. We look forward to servicing you along your journey to enriched health and well- being.<br>
+			</p>
+		</div>
+	</div>
+
+	<div class=" row chart4">
+		<div class=" col-md-6 inner_flexbox">
+			<div class="inner1" >
+				<h2>About Fitness Guide International® </h2>
+				<p>
+					Humans are sometimes afflicted with diseases during their lifetime. Some of these
+					diseases are self-inlficted while others occur as a result of infectious organisms.
+					Sedentary lifestyles involve physical incativity resulting in disease. These self
+					inflicted diseases are caused by sedentary lifestyle. According to the World
+					Health Organisation (WHO), 2 of every 3 recorded deaths are due to diseases arising from sedentary lifestyles. As a result, millions of dollars are spent yearly as direct medical cost in treating such diseases. Detial of these WHO recognised diseases cause by sedentary lifestyle can be found here...
+				</p>
+				<a class="mainbtn" href="https://fitnessguideint.com">Learn More</a>
+			</div> 
+		</div>
+
+		<div class="col-md-6 my-5 inner1" style="display: flex; justify-content: space-around;">
+				<img src=" {{url_for('static', filename='assets/images/hero4.jpg')}} " class="img-fluid" alt="Image" width="90%" height="360"/>
+		</div>
+	</div>
+	
+	<div class="row mt-5" id="evaluation">
+		<div class="col-md-6 mx-auto">
+			<div class="test_left">
+				<h1 class="mt-5">Your Fitness</h1>
+				<p class="pt-2">
+					The Fitness Guide International® Fitness Evaluation offers you and your Trainer the opportunity
+					to check your health &amp; wellness status with a comprehensive evaluation of your current
+					fitness levels. Based on our evaluation, your Trainer can gauge your present level of health, and
+					if applicable, the effectiveness of your current training routine. Based on our Fitness
+					Evaluation your Trainer will create an Exercise prescription specific to your present needs.<br>
+					We will offer suggestions for areas that need improvement as well as guide you to the lifestyle
+					changes you need to experience better health and overall well-being.<br><br>
+					<ol class="mt-5">
+						<li class="pe-5 mt-5">Sedentry Life Index Evaluation</li>
+						<li class="pe-5">Index Lifestyle Test</li>
+						<li class="pe-5">Social Readjustment Scale Test</li>
+					</ol>
+				</p>  
+				<a href="{{url_for('employment')}}" class="test_btn btn-lg" style="text-decoration: none;"> Take Assessment </a><br> <br>	
+			</div>
+		</div>
+		<div class=" col-md-6 test_right pt-4 d-flex justify-content-center">
+			<img src="{{url_for('static', filename='assets/images/intro.jpg')}}" class="img-fluid" alt="Image" height="508">
+		</div>
+	</div>
+
+	<!--Contact-->
+	<div class="row mt-3">
+		<div class="col-md-12 mt-5">
+			<h1>Contact Us</h1>
+		</div>
+
+		<div class="col-md-6">
+				<div class="img-box">
+				  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15857.857077378834!2d7.509865189069743!3d6.46271496761548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044a5726dc690b7%3A0x63f45fe4d1780fed!2sNorthwest%20Filling%20station!5e0!3m2!1sen!2sng!4v1686958322059!5m2!1sen!2sng" width="95%" height="300" style="border:0;" allowfullscreen="" loading="lazy" class="img-fluid" referrerpolicy="no-referrer-when-downgrade" target="_blank"></iframe>
+
+				  	<div>
+					  <a href="https://goo.gl/maps/9hAbiCRmqRsUuFAB7" target="_blank" class="btn text-light btn-sm" style="background-color: red; color:white"> Click to Navigate</a>
+					</div>
+				</div>
+				
+		</div>
+		
+		<div class="col-md-6">
+			<form action="{{url_for('contact')}}" method="post">
+			{{ form.csrf_token }}
+			<div class="form-group my-3">
+					{% if form.username.errors %}
+						{{ form.username (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.username.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
+				{% else %}
+				{{ form.username (class="form-control") }}
+				{% endif %}
+			
+			<div class="form-group my-3">
+					{% if form.email.errors %}
+							{{ form.email (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.email.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
+				{% else %}
+				{{ form.email (class="form-control") }}
+				{% endif %}
+		
+			<div class="form-group my-3">
+			{% if form.subject.errors %}
+							{{ form.subject (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.subject.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
+				{% else %}
+				{{ form.subject (class="form-control") }}
+				{% endif %}
+
+			<div class="form-group my-3">
+			{% if form.msg.errors %}
+							{{ form.msg (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.msg.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
+				{% else %}
+				{{ form.msg (class="form-control") }}
+				{% endif %}
+			
+			<div class="form-group my-3">
+			{{ form.submit (class="mainbtn")}}
+			</div>
+			</form>
+		</div>
+
+		
+		
+	</div>
+</main>
+	<div class="row">
+		<div class="col-md-12 d-flex justify-content-center">
+			<div class="copyright">
+			&copy; Copy right 2023 | <a href="#">Privacy </a>| <a href="#">Policy</a>
+
+			<span> Designed by <a href="#">Lambdah Softwares </a> </span>
+			</div>
+			
+		</div>
+	</div>
+</div>
+	
+
+<script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.min.js')}} "></script>
+<script type="text/javascript" language="javascript" src="{{url_for('static', filename='assets/js/script.js')}}"></script>
+<script src="{{url_for('static', filename='assets/js/jquery-3.6.1.min.js')}} "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>				
+</html>

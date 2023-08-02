@@ -1,0 +1,62 @@
+{% extends 'users/index.html' %}
+
+{%block body%}
+<div class="container-fluid mt-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-5">
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkout">Checkout</button>
+
+
+            <div class="modal fade" id="checkout" tabindex="-1" aria-labelledby="cart_details" aria-hidden="true" data-bs-backdrop='static' data-bs-keyboard='false'>
+                <div class="modal-dialog modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">Cart Checkout</h5>
+
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Here is a summary of your Order</h5>
+                                <p> 
+                                  {% if deets %}
+                                    <strong>Name:</strong> {{ deets.user_fname }} <br>
+                                  {% endif %}
+                                    
+                                    <strong>Total Amount</strong> <del>N</del>4,000<br> <br>
+                                    &dollar;
+                                       <br>
+                                  </p> 
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5 style="color: red;"><strong>PAYMENT DETAILS</strong></h5>
+                        <p> 
+                          <strong>Bank Name:</strong> UBA Bank <br>
+                          <strong>Account Number:</strong> 1234567890  <br>
+                          <strong>Account Name:</strong> Bethel Bridals   <br>
+                        </p> 
+                        <h2 style="color: red;"><STRong>Note:</STRong></h2>
+                        <ul>
+                            <li><b>Order</b>: Your order can only be confirmed when payment is received
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" class="btn border btn-primary" data-bs-toggle="modal" data-bs-target="#cart_details">Back to Cart</a>
+
+                        <a href="#" class="btn btn-primary">Complete Transaction</a>
+                        
+                        
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{%endblock%}

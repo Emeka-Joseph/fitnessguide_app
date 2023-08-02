@@ -1,0 +1,65 @@
+{% extends 'admin/admin_index.html' %}
+
+{% block dash %} 
+<div class="row" style="display: flex; justify-content: center; background-color:  rgb(3, 3, 93);">
+    <div class="col-md-10" id="result_column" >
+
+        <h1>Voucher Generator</h1>
+    <form method="post" action="{{ url_for('generate_voucher') }}">
+        <button type="submit">Generate Voucher Codes</button>
+    </form>
+
+        <h4 class="my-5" style="color: white;">The List below contains Payment details of users on the platform </h4>    
+            <table class="table table table-striped table-responsive mt-5" style="color: white">
+
+                <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>Date of Payment</th>
+                        <th>Amount Paid</th> 
+                        <th>Payment Status</th>
+                        <th>Payment Reference</th>
+                        <th>User's ID</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                   
+                    {% for i in allusers %}
+ 
+                    <tr >
+                        <td class="cat">{{ loop.index }}</td>
+                        <td class="cat"> {{i.user_fname}}  </td>
+                        <td class="cat"> {{i.user_lname}}  </td>
+                        <td class="cat"> {{i.user_email}}  </td>
+                        <td class="cat"> {{i.user_phone}}  </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+            <table class="table table table-responsive mt-5" style="color: white">
+
+                <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>Voucher</th>
+                    </tr>
+                   </thead> 
+                <tbody>
+                   
+                    {% for j in allvouchers %}
+ 
+                    <tr >
+                        <td class="cat">{{ loop.index }}</td>
+                        <td class="cat"> {{j.voucher_code}}  </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+    </div>
+</div> 
+{% endblock %}
+

@@ -1,0 +1,23 @@
+<div class="list-group list-group-flush my-3">
+                <a href="{{url_for('admin_index')}}" class="list-group-item list-group-item-action bg-transparent second-text active">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+
+                <a href="{{url_for('manage_users')}}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-file"></i>  Manage users</a>
+ 
+                <a href=" {{url_for('manage_payment')}} " class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-sharp fa-solid fa-eye"></i> Manage Payment</a>
+
+                <a href="{{url_for('manage_results')}}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-thumbs-up"></i> Results</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-sharp fa-solid fa-comments"></i> Comments</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-share-from-square"></i> Shares</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                    Hi, {{ session.get('loggedin')}}
+                    <i class="fa-sharp fa-solid fa-power-off"></i> Logout</a>
+            </div>

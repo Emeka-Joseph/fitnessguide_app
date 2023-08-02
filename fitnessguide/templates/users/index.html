@@ -4,10 +4,15 @@
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Evaluation | Fitness Guide</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href=" {{url_for('static',filename='assets/css/style.css')}}" type="text/css"/>
 	<link rel="stylesheet" href=" {{url_for('static',filename='assets/bootstrap/css/bootstrap.min.css')}}"/>
 	<link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<style>
 		#mailing{
 			position:relative;
@@ -18,73 +23,98 @@
 		}
 		.tour:hover{
 			background-color:#fff !important;
-	
 		}
-	</style>
-	
+	</style>	
 </head>
-
 <body>
-	<div>
-       <nav>
-			<div id="logo">
-				<a href="/"><img src="{{url_for('static',filename='assets/images/logo-wide.png')}}" alt="Site logo"/></a>
-			</div>
-			<div id="menu">
-				<ul>
-					<li><a href="#about">About</a></li>&emsp;&nbsp;
-                    <li><a href="#contact">Contact</a></li>&emsp;&nbsp;
-                    <li><a href="#evaluation">Evaluation</a></li>&emsp; &emsp; &emsp; &emsp;
-					{% if session.get('loggedin')==None %}
-					<li><a href="{{ url_for('login') }}" class="mainbtn">Login</a></li>&emsp;
-					<li><a href="{{ url_for('signup') }}" class="mainbtn_outline">Sign Up</a></li>
-					{% else %}
-					<li><a href="" class="mainbtn">Logged In </a></li>&emsp;
-					<li><a href="{{ url_for('user_logout') }}" class="mainbtn">Log Out </a></li>&emsp;
-					{% endif %}
-				</ul>
-			</div>
-			<div id="nav_cta" class="my-3">
-			<button>TALK TO AN EXPERT</button>
-			</div>
-			
-	   </nav>
-	   
-	<div class="hero_flexbox ">
-		<div class="textbox">
-			<h1>Fitness Evaluation</h1>
-			<p>
-				Our comprehensive portfolio offers proven high-value services to ensure optimal
-				customer experiences.
-			</p>
-		</div>
-		
-	<div class="imagebox" style="background-image:url({{url_for('static',filename='assets/images/hero.jpg')}}); background-size:cover">
-	</div>
-	</div>
-	   
-	<div>
-		{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-			{% for category, message in messages %}
-				<div class="alert alert-{{ category }}">
-			<span style="text-align: center;"> {{ message}} </span> 
-			{% endfor %}
+	
+<div class="container-fluid">
+	<main>
+		<!--Header-->
+
+	<!-- Replace the current navigation markup with the following -->
+	
+<div class="navbar navbar-expand-md navbar-light bg-light">
+	<a href="{{url_for('home')}}" id="logo"><img src="{{url_for('static',filename='assets/images/logo-wide.png')}}"  class="img-fluid" width="50%" alt="Site_logo"/></a>
+  
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	  <ul class="navbar-nav ms-auto">
+		<li class="nav-item">
+		  <a class="nav-link  btn-outline-warning" aria-current="page" href="{{url_for('home')}}">Home</a>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link btn-outline-warning" href="#about">About</a>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link btn-outline-warning" href="#contact">Contact</a>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link btn-outline-warning mx-2" href="#evaluation">Evaluation</a>
+		</li>
+
+		<li class="nav-item">
+			<a class="btn btn-warning" aria-current="page" href="{{url_for('payment')}}">Purchase Voucher</a>
+		  </li>
+
+		{% if session.get('loggedin')==None %}
+		<li><a href="{{ url_for('login') }}" class="mainbtn btn btn-primary mx-2">Login</a></li>
+		<li><a href="{{ url_for('signup') }}" class="mainbtn_outline btn btn-success">Sign Up</a></li>
+		{% else %}
+		<li><a href="" class="mainbtn" style="text-decoration: none;">Welcome, {{alluser.user_fname}} &nbsp {{alluser.user_lname}} </a></li>&emsp;
+		<li><a href="{{ url_for('user_logout') }}" class="mainbtn" style="text-decoration: none;">Log Out </a></li>&emsp;
 		{% endif %}
-	{% endwith %}
+	  </ul>
 	</div>
+  </div>
+  
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+	  {% for category, message in messages %}
+	  <div class="alert alert-{{ category }}">
+		  <span style="text-align: center;"> {{ message}} </span> 
+	  </div>
+	  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% block body%}
+	
+	<!--body-->
+	<div class="row hero_flexbox">
+		<div class="col-md-6">
+			<div  class="textbox">
+				<div class="mx-5 mb-5">
+					<h1>Fitness Evaluation</h1>
+				<p>
+					Our comprehensive portfolio offers proven high-value services to ensure optimal
+					customer experiences.
+					<hr>
+				</p>
+					<h4>How it Works</h4>
+				<span style="font-size: 1.5em;" >
+					To take the evaluation tests, login in first or signup if you are a new user. Clikc on <a href="{{url_for('employment')}}" >Take the Assessments</a> Then purchase the voucher which would give you the access to view your and download your results.
+				</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">	
+			<img src="{{ url_for('static', filename='assets/images/hero.jpg') }}" class="img-fluid imagebox" width="100%" alt="">
+		</div>	
+	</div>
+	
 
 	<div class="row">
-		<div class="col-md-12 ms-5">
-			
-			<div>
-
-			</div>
+		<div class="col-md-12">
 	
 			<h2 id="welcome_msg">Congratulations on Your Decision to Pursue a Healthier, More Active &amp; Energized Lifestyle</h2>
 		</div>
-		<div class="col-md-5 ms-5 mt-5">
-						<img src="" alt="" name="slide" class="mb-5" height="400" width="500">
+		<div class="col-md-6 mt-5">
+						<img src="" alt="" name="slide" class="img-fluid mb-5" height="400" width="95%">
 		</div>
 		<div class="col-md-6">
 			<p class="mx-auto mt-3">
@@ -94,51 +124,32 @@
 			</p>
 		</div>
 	</div>
-		
-<section id="serv" class="mx-auto my-5">
-	<section class="service_chart" id="about">
-		<a href="{{url_for('employment')}}"> 
-			<div class="chart1">
-				<h2>Sedentry Life Index Evaluation</h2> Click to enter the physical fitness test phase
-			</div>
-		</a>
 
-		<a href="{{url_for('sed_lifestyle')}}"> 
-			<div class="chart2">
-			<h2>Index Lifestyle Test</h2> Click to enter the sedentary lifestyle test phase
-			</div>
-		</a>
-		
-		<a href="{{url_for('social')}}"> 
-			<div class="chart3">
-				<h2>Social Readjustment Scale Test</h2>Click to enter the social readjustment scale test phase
-			</div>
-		</a>
-		<div class="chart4">
-			<section class="inner_flexbox">
-				<div class="inner1" >
-					<h2>About Fitness Guide International® </h2>
-					<p>
-						Humans are sometimes afflicted with diseases during their lifetime. Some of these
-						diseases are self-inlficted while others occur as a result of infectious organisms.
-						Sedentary lifestyles involve physical incativity resulting in disease. These self
-						inflicted diseases are caused by sedentary lifestyle. According to the World
-						Health Organisation (WHO), 2 of every 3 recorded deaths are due to diseases arising from sedentary lifestyles. As a result, millions of dollars are spent yearly as direct medical cost in treating such diseases. Detial of these WHO recognised diseases cause by sedentary lifestyle can be found here...
-					</p>
-					<a class="mainbtn" href="https://fitnessguideint.com">Learn More</a>
-				</div>
-			<div class="inner2"></div>
+	<div class=" row chart4">
+		<div class=" col-md-6 inner_flexbox">
+			<div class="inner1" >
+				<h2>About Fitness Guide International® </h2>
+				<p>
+					Humans are sometimes afflicted with diseases during their lifetime. Some of these
+					diseases are self-inlficted while others occur as a result of infectious organisms.
+					Sedentary lifestyles involve physical incativity resulting in disease. These self
+					inflicted diseases are caused by sedentary lifestyle. According to the World
+					Health Organisation (WHO), 2 of every 3 recorded deaths are due to diseases arising from sedentary lifestyles. As a result, millions of dollars are spent yearly as direct medical cost in treating such diseases. Detial of these WHO recognised diseases cause by sedentary lifestyle can be found here...
+				</p>
+				<a class="mainbtn" href="https://fitnessguideint.com">Learn More</a>
+			</div> 
 		</div>
-		
-	</section>
-	<div height="100px"></div>
-</section>
 
-	<section id="evaluation" class="mt-5">
-		<div class="test mx-auto">
+		<div class="col-md-6 my-5 inner1" style="display: flex; justify-content: space-around;">
+				<img src=" {{url_for('static', filename='assets/images/hero4.jpg')}} " class="img-fluid" alt="Image" width="90%" height="360"/>
+		</div>
+	</div>
+	
+	<div class="row mt-5" id="evaluation">
+		<div class="col-md-6 mx-auto">
 			<div class="test_left">
 				<h1 class="mt-5">Your Fitness</h1>
-				<p class="pe-5">
+				<p class="pt-2">
 					The Fitness Guide International® Fitness Evaluation offers you and your Trainer the opportunity
 					to check your health &amp; wellness status with a comprehensive evaluation of your current
 					fitness levels. Based on our evaluation, your Trainer can gauge your present level of health, and
@@ -152,270 +163,156 @@
 						<li class="pe-5">Social Readjustment Scale Test</li>
 					</ol>
 				</p>  
-				<a href="{{url_for('employment')}}" class="test_btn btn-lg" style="text-decoration: none;"> Take Assessment </a><br> <br>
-				
-				
-				
-			</div>
-			<div class="test_right">
-				<img src="{{url_for('static', filename='assets/images/intro.jpg')}}" alt="Image" height="508">
+				<a href="{{url_for('employment')}}" class="test_btn btn-lg" style="text-decoration: none;"> Take Assessment </a><br> <br>	
 			</div>
 		</div>
+		<div class=" col-md-6 test_right pt-4 d-flex justify-content-center">
+			<img src="{{url_for('static', filename='assets/images/intro.jpg')}}" class="img-fluid" alt="Image" height="508">
+		</div>
 	</div>
-	
-	</secti\on>
 
-<section id="contact" class="mt-5">
-<h1>Contact</h1>
-<div id="contact" class="mx-auto">
-<form action="{{url_for('contact')}}" method="post" class="bg-light p-4 p-md-5 contact-form" >
+	<!--Contact-->
+	<div class="row mt-3">
+		<div class="col-md-12 mt-5">
+			<h1>Contact Us</h1>
+		</div>
 
-	
+		<div class="col-md-6">
+				<div class="img-box">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126840.83549624974!2d3.3517667722630526!3d6.549927709426837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8de858f478df%3A0x30c459b12abaf34f!2sDigital%20Bridge%20Institute!5e0!3m2!1sen!2sng!4v1690969015366!5m2!1sen!2sng" width="95%"  style="border:0;" allowfullscreen="" loading="lazy" class="img-fluid" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-	{{ form.csrf_token }}
-	<!-- {% with messages = get_flashed_messages(with_categories=true) %}
-	{% if messages %}
-		{% for category, message in messages %}
-		<div class="alert alert-{{ category }}">
-			{{ message}}
-		{% endfor %}
-	{% endif %}
-	
-	{% endwith %} -->
-	<div class="form-group my-3">
-	{% if form.username.errors %}
-					{{ form.username (class="is_invalid") }}
-					<div class="invalid-feedback">
-						{% for error in form.username.errors %}
-						<span>{{ error }}</span>
-						{% endfor %}
+				  	<div>
+					  <a href="https://goo.gl/maps/9YNYku2aPmw7U9667" target="_blank" class="btn text-light btn-sm" style="background-color: red; color:white"> Click to Navigate</a>
 					</div>
 				</div>
+				
+		</div>
+		
+		<div class="col-md-6">
+			<form action="{{url_for('contact')}}" method="post">
+			{{ form.csrf_token }}
+			<div class="form-group my-3">
+					{% if form.username.errors %}
+						{{ form.username (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.username.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
 				{% else %}
-					{{ form.username (class="form-control") }}
+				{{ form.username (class="form-control") }}
 				{% endif %}
-	</div>
-	<div class="form-group my-3">
-	{% if form.email.errors %}
-					{{ form.email (class="is_invalid") }}
-					<div class="invalid-feedback">
-						{% for error in form.email.errors %}
-						<span>{{ error }}</span>
-						{% endfor %}
-					</div>
-				</div>
+			
+			<div class="form-group my-3">
+					{% if form.email.errors %}
+							{{ form.email (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.email.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
 				{% else %}
 				{{ form.email (class="form-control") }}
 				{% endif %}
-	</div>
-	<div class="form-group my-3">
-	{% if form.subject.errors %}
-					{{ form.subject (class="is_invalid") }}
-					<div class="invalid-feedback">
-						{% for error in form.subject.errors %}
-						<span>{{ error }}</span>
-						{% endfor %}
-					</div>
-				</div>
+		
+			<div class="form-group my-3">
+			{% if form.subject.errors %}
+							{{ form.subject (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.subject.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
 				{% else %}
 				{{ form.subject (class="form-control") }}
 				{% endif %}
-	</div>
-	<div class="form-group my-3">
-	{% if form.msg.errors %}
-					{{ form.msg (class="is_invalid") }}
-					<div class="invalid-feedback">
-						{% for error in form.msg.errors %}
-						<span>{{ error }}</span>
-						{% endfor %}
-					</div>
-				</div>
+
+			<div class="form-group my-3">
+			{% if form.msg.errors %}
+							{{ form.msg (class="is_invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.msg.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+			</div>
 				{% else %}
 				{{ form.msg (class="form-control") }}
 				{% endif %}
-	</div>
-	<div class="form-group my-3">
-	{{ form.submit (class="mainbtn")}}
-	</div>
-</form>
-</div>
-</section>
-
-
-<section class="ad3 mt-5">
-<div class="ad3_box1">
-<a href="#">Services</a>
-<p>Learn how our Services could benefit your health.</p>
-<a href="www.fitnessguideint.com" id="homesite_link">Learn More</a>
-</div>
-
-<div class="ad3_box2">
-<img src=" {{url_for('static', filename='assets/images/hero4.jpg')}} " alt="Image" width="60%"/>
-</section>
-
-<!-- AJAX TESTING-->
-
-<DIV>
-	<div class="container mt-5">
-        <div class="row">
-            <div class="col text-center">
-                <div>
-                    <input type="text" id="focus-trial" placeholder="Just to check something new" class="form-control">
-                </div>
-
-                <div id="result"></div>
-                
-                <div class="search-box">
-                    <input type="text" id="focus-trial2" placeholder="second test" class="form-control my-5">
-                </div>
-
-                <button class="btn btn-primary" id="text-btn"> Text Data</button>
-                <button class="btn btn-success" id="json-btn"> JSON Data</button>
-                <button class="btn btn-warning" id="api-btn"> API Data</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid mt-3">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Text Data</h3>
-                    </div>
-                    <div class="card-body" id="text-card">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>JSON Data</h3>
-                    </div>
-                    <div class="card-body" id="json-card">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>API Data</h3>
-                    </div>
-                    <div class="card-body" id="api-card">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-		<div class="row mt-4">
-			<div class="col text-center">
-				<button class="btn btn-success" id="get_btn">GET</button>
-				<button class="btn btn-warning" id="post_btn">POST</button>
-				<button class="btn btn-primary" id="put_btn">PUT</button>
-				<button class="btn btn-danger" id="delete_btn">DELETE</button>
-			</div>
-		</div>
-
-		<div class="row mt-5">
-			<div class="col">
-				<table class="table table-striped table-hover text-center table-warning">
-					<thead>
-						<tr>
-							<th>User ID</th>
-							<th>User First Name</th>
-							<th>User LAst Name</th>
-							<th>Gender</th>
-							<th>Email Address</th>
-							<th>Date Registered</th>
-						</tr>
-					</thead>
-
-					<tbody id="table_body">
-						<tr>
-						
-						</tr>
-					</tbody>
-
-				</table>
-			</div>
-		</div>
-    </div>
-</DIV>
-	   
-	   
-	              <!--    FOOTER -->
-
-<div class="row mt-5">
-<div class="col-md-12 mt-5 pre_footer">
-	
-	<h1>Join Our Mailing List</h1>
-			<form>
-				<input type="email" class="" name="email_address"
-				placeholder="Enter Your Email Address">
-				<button type="submit" id="mailing" class="form_button">Go</button>
-			</form>
 			
+			<div class="form-group my-3">
+			{{ form.submit (class="mainbtn")}}
+			</div>
+			</form>
+		</div>
 
-	<div class="f_col">
-		<h2>Our Tests</h2>
-		<ul class="px-5 mx-auto">
-			<li>Sedentry Life Index Evaluation</li>
-			<li>Index Lifestyle Test</li>
-			<li>Social Readjustment Scale Tes</li>
-		</ul>
+		
+		
 	</div>
-	<div class="f_col">
-		<h2>Navigation</h2>
-		<ul class="px-5 mx-auto">
-			<li><a href="#about">About</a></li>
-			<li><a href="#contact">Contact</a></li>
-			<li><a href="#evaluation">Evaluation</a></li>
-		</ul>
-	</div>
-	<div class="f_col">
-		<h2>Quick Links</h2>
-		<ul class="px-5 mx-auto">
-			<li><a href="www.fitnessguideint.com/about">About Fitness Guide</a></li>
-			<li><a href="www.fitnessguideint.com/contact">Contact Us</a></li>
-			<li><a href="www.fitnessguideint.com">Fitness Guide International®</a></li>
-		</ul>
-	</div>
-	<div class="f_col">
-		<h2>Fitness Guide International®</h2>
-			<p class="px-5 mx-auto">
-				Fitness Guide International (FGI) Digital Bridge Institute Stadium Pavilion,
-				Office Complex 10-16, Cappa, Oshodi, Lagos.<br>+234 805 114 0072<br>+234 802 342 2825
+</main>
+
+{%endblock%}
+
+<div class="container-fluid text-dark mt-1 pt-1" style="background-color: black;">
+	<div class="row px-xl-5 pt-1" style="display: flex; justify-content: space-around;">
+		<div class="col-lg-2 ">
+			<h4 class="text-warning">Quick Links</h4>
+			<p>
+				<a class="text-light" href="{{url_for('home')}}">Home</a>
 			</p>
-		<img src=" {{url_for('static', filename='assets/images/icons/fb.png')}}" alt="facebook-icon" width="5%" class="icons fb">
-		<img src=" {{url_for('static', filename='assets/images/icons/ig.png')}}" alt="instagram-icon" width="5%" class="icons ig">
-		<img src=" {{url_for('static', filename='assets/images/icons/twi.png')}}" width="5%" alt="twiteer" class="icons twi">
-	</div>
-					
-	</div>
-	<div class="footer text-center">
-			<ul class="mt-4">
-				<li><a href="/privacy-policy">Privacy Policy</a></li>&emsp; &emsp; &nbsp;
-				<li><a href="/terms-conditions">Terms of Use</a></li>&emsp; &emsp; &nbsp;
-				<li><a href="/site-requirements">Site Requirements</a></li>&emsp; &emsp; &nbsp;
-				<li><a href="www.yemi.dev/">Designed By Yemi</a></li>
-			</ul>
-		</ul>
-	<p class="mb-2">FitnessGuide International&copy; &emsp;&#45;&emsp;All Rights Reserved | Designed By Lambdah Softwares&copy;</p>
-	</div>
-	</div> 
+			
+			<p>
+				<a class="text-light" href="#about_us">About Us</a>
+			</p>
+			
+			<p>
+				<a class="text-light" href="#contact">Contact</a>
+			</p>
+		</div>
+		<div class="col-lg-6 col-md-12 pr-3 pr-xl-5">
+				<h4 class="display-5 font-weight-semi-bold text-warning" id="contact">Contact</h4>
 	
+				<ul style="color: #fff; text-decoration: none;">
+					<li style="font-weight: bolder;"><span class="fa fa-map-marker"></span> Fitness Guide International (FGI) Digital Bridge Institute Stadium Pavilion, Office Complex 10-16,Cappa, Oshodi, Lagos.
+					</li>
+					<li><a href="tel:+2348051140072" class="futer"><span class="fa fa-phone"></span>(+234)8-051-140-072</a></li>
+					<li><a href="tel:+2348023422825" class="futer"><span class="fa fa-phone"></span> (+234)8-023-422-825</a></li>
+					<li><a href="mailto:fitnessguideint@yahoo.com" class="mail futer"><span class="fa fa-envelope-open-o"></span> fitnessguideint@yahoo.com</a></li>
+				</ul>
+		</div>
+		<div class="col-lg-2 ">
+			<h4 class="text-warning">Social Media</h4>
+			<div class="main-social-footer-29">
+				<a href="https://web.facebook.com/fitnessguideint" class="facebook" target="_blank"><span class="fa fa-facebook"></span>Facebook</a>
+				<a href="https://twitter.com/FitnessGuideIn1" class="twitter" target="_blank"><span class="fa fa-twitter"></span>Twitter</a>
+				<a href="https://www.instagram.com/fitnessguideint/" class="instagram" target="_blank"><span class="fa fa-instagram"></span>Instagram</a>
+				<a href="#" class="google-plus" target="_blank">Google-plus<span class="fa fa-google-plus" target="_blank"></span></a>
+				<a href="#" class="linkedin" target="_blank"><span class="fa fa-linkedin"></span>linkedin</a>
+			</div>
+		</div>          
 	</div>
-	<script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.min.js')}} "></script>
-	<script type="text/javascript" language="javascript" src="{{url_for('static', filename='assets/js/script.js')}}"></script>
-	<script src="{{url_for('static', filename='assets/js/jquery-3.6.1.min.js')}} "></script>
-	<script src=" {{url_for('static',filename='app.js')}}" ></script>
+	<div class="row border-top border-light mx-xl-5">
+		<div class="col-md-12 px-xl-0 d-flex justify-content-center">
+			<p class="mb-md-0 text-center text-md-left text-warning">
+				&copy; <span class="text-light" href="#">fgifitnesstest.com 2023. All Rights Reserved. Designed by</span>
+				<a class="text-light font-weight-semi-bold" href="">Lambdah Softwares</a>
+			</p>
+		</div>
+	</div>
+</div>
 
 	
-</body>
-				
+</div>
+	
+
+<script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.min.js')}} "></script>
+<script type="text/javascript" language="javascript" src="{{url_for('static', filename='assets/js/script.js')}}"></script>
+<script src="{{url_for('static', filename='assets/js/jquery-3.6.1.min.js')}} "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>				
 </html>

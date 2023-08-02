@@ -1,27 +1,35 @@
 import os,random
+from datetime import datetime
 from flask import render_template, redirect, flash, session, request, url_for
-from fitnessguide.models import Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories,Readjustment,Sed_Lifestyle,Results,Contact
+from fitnessguide.models import Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher,Readjustment,Sed_Lifestyle,Results,Contact
 from fitnessguide import app, db
 from fitnessguide.forms import LoginForm, SignUpForm, ContactForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import text
 from sqlalchemy import desc,asc,or_,func
 
+import string
+
+
 
 def generate_name(): 
     filename = random.sample(string.ascii_lowercase,10) 
     return ''.join(filename)
 
+
 @app.route('/')
 def home():
     form=ContactForm()
-    return render_template('users/index.html',form=form)
+    cid = session.get('loggedin')
+    alluser = db.session.query(Users).filter(Users.user_id==cid).first()
+    return render_template('users/index.html',form=form, alluser=alluser)
 
 
 @app.route('/contact', methods=['GET','POST'])
 def contact():
     form=ContactForm()
     if request.method == "GET":
+        
         return render_template('users/index.html',form = form)
     else:
         name=request.form.get("username")
@@ -44,7 +52,10 @@ def contact():
 def signup():
     form = SignUpForm()
     if request.method == "GET":
-        return render_template('users/signup.html', title="Sign Up", form = form)
+        #cid = session.get('loggedin')
+        alluser = db.session.query(Users).all()
+        
+        return render_template('users/signup.html', title="Sign Up", form = form, alluser=alluser)
     else:
         fname = form.fname.data
         lname = form.lname.data
@@ -52,18 +63,25 @@ def signup():
         password=form.password.data
         conpassword = form.confirm_password.data
         hashed_password = generate_password_hash(password)
-    if fname !='' and lname != "" and email !='' and password !='' and password==conpassword:
-        new_user= Users(user_fname = fname, user_lname = lname, user_email = email,
-        user_pwd = hashed_password, gender='',user_phone='',social_rs='',sed_ls='',sed_lie='')
-        db.session.add(new_user)
-        db.session.commit()
-        userid = new_user.user_id
-        session['loggedin']=userid
-        flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
-        return redirect(url_for('login'))
-    else:
-        flash('You must fill the form correctly to signup and check that your password matched', "danger")
-        return redirect(url_for('signup'))
+        checkmail = db.session.query(Users).filter(Users.user_email==email).first()
+        if checkmail!=None:
+            flash('there is already an account with that email, kindly sign in or verifie your details', 'warning')
+            return redirect(url_for('signup'))
+        else:
+            if fname !='' and lname != "" and email !='' and password !='' and password==conpassword:
+                new_user= Users(user_fname = fname, user_lname = lname, user_email = email,
+                user_pwd = hashed_password, gender='',user_phone='',social_rs='',sed_ls='',sed_lie='')
+                db.session.add(new_user)
+                db.session.commit()
+                userid = new_user.user_id
+                session['loggedin']=userid
+                flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
+                return redirect(url_for('login'))
+            else:
+                flash('You must fill the form correctly to signup and check that your password matched', "danger")
+                return redirect(url_for('signup'))
+
+    
 
 
 @app.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
@@ -119,36 +137,29 @@ def employment():
         flash('Please sign in to take the various categories of Evaluation Tests','warning')
         return redirect('/') 
     else:
-        
-        #mdeets = db.session.query(Employment).order_by(Employment.q_id).all()
-        #cid = db.session.query(Employment).order_by(Employment.q_id).first()
         if request.method=='GET':
             user_deets = db.session.query(Users).filter(Users.user_id==id).first()
             deets = db.session.query(Results).all()
             return render_template('users/employment.html',user_deets=user_deets,deets=deets)
         else:
-            em1 = request.form.get('q1')
-            em2 = request.form.get('q2')
-            em3 = request.form.get('q3')
-            em4 = request.form.get('q4')
-            em5 = request.form.get('q5')
-            em6 = request.form.get('q6')
-            em7 = request.form.get('q7')
-            em8 = request.form.get('q8')
-            em9 = request.form.get('q9')
-            em10 = request.form.get('q10')
-            em11 = request.form.get('q11')
-            em12 = request.form.get('q12')
-            em13 = request.form.get('q13')
-            em14 = request.form.get('q14')
-            em15 = request.form.get('q15')
-            em16 = request.form.get('q16')
-
-            #res = db.session.query(Results).order_by(Results.res_sl_id.desc()).first()  
+            em1 = int(request.form.get('q1',0))
+            em2 = int(request.form.get('q2',0))
+            em3 = int(request.form.get('q3',0))
+            em4 = int(request.form.get('q4',0))
+            em5 = int(request.form.get('q5',0))
+            em6 = int(request.form.get('q6',0))
+            em7 = int(request.form.get('q7',0))
+            em8 = int(request.form.get('q8',0))
+            em9 = int(request.form.get('q9',0))
+            em10 =int(request.form.get('q10',0))
+            em11 = int(request.form.get('q11',0))
+            em12 = int(request.form.get('q12',0))
+            em13 = int(request.form.get('q13',0))
+            em14 = int(request.form.get('q14',0))
+            em15 = int(request.form.get('q15',0))
+            em16 = int(request.form.get('q16',0))
             
-
-            #mdeets = db.session.query(Results).filter(Results.user_id==res).first()
-            resp = int(em1) + int(em2) + int(em3) + int(em4) + int(em5) + int(em6) + int(em7) + int(em8) + int(em9) + int(em10) + int(em11) + int(em12) + int(em13) + int(em14) + int(em15) + int(em16)
+            resp = em1 + em2 + em3 + em4 + em5 + em6 + em7 + em8 + em9 + em10 + em11 + em12 + em13 + em14 + em15 + em16
             #res.employment=resp
             result = Results(employment=resp,environment='',lifestyle='',personality='',relationship='',symptoms='',social='',sed_life_hrs='',sed_life_conval='',user_id=id)
             db.session.add(result)
@@ -168,24 +179,24 @@ def environment():
             deets = db.session.query(Results).all()
             return render_template('users/environment.html',user_deets=user_deets,deets=deets)
         else:
-            en1 = request.form.get('q1')
-            en2 = request.form.get('q2')
-            en3 = request.form.get('q3')
-            en4 = request.form.get('q4')
-            en5 = request.form.get('q5')
-            en6 = request.form.get('q6')
-            en7 = request.form.get('q7')
-            en8 = request.form.get('q8')
-            en9 = request.form.get('q9')
-            en10 = request.form.get('q10')
-            en11 = request.form.get('q11')
-            en12 = request.form.get('q12')
-            en13 = request.form.get('q13')
-            en14 = request.form.get('q14')
-            en15 = request.form.get('q15')
-            en16 = request.form.get('q16')
+            en1 = int(request.form.get('q1',0))
+            en2 = int(request.form.get('q2',0))
+            en3 = int(request.form.get('q3',0))
+            en4 = int(request.form.get('q4',0))
+            en5 = int(request.form.get('q5',0))
+            en6 = int(request.form.get('q6',0))
+            en7 = int(request.form.get('q7',0))
+            en8 = int(request.form.get('q8',0))
+            en9 = int(request.form.get('q9',0))
+            en10 = int(request.form.get('q10',0))
+            en11 = int(request.form.get('q11',0))
+            en12 = int(request.form.get('q12',0))
+            en13 = int(request.form.get('q13',0))
+            en14 = int(request.form.get('q14',0))
+            en15 = int(request.form.get('q15',0))
+            en16 = int(request.form.get('q16',0))
             
-            resp = int(en1) + int(en2) + int(en3) + int(en4) + int(en5) + int(en6) + int(en7) + int(en8) + int(en9) + int(en10) + int(en11) + int(en12) + int(en13) + int(en14) + int(en15) + int(en16)
+            resp = en1 + en2 + en3 + en4 + en5 + en6 + en7 + en8 + en9 + en10 + en11 + en12 + en13 + en14 + en15 + en16
 
             res = db.session.query(Results).first()    
             rezz = Results.query.order_by(Results.res_sl_id.desc()).first()  
@@ -206,26 +217,26 @@ def lifestyle():
             deets = db.session.query(Results).all()
             return render_template('users/lifestyle.html',user_deets=user_deets,deets=deets)
         else:
-            ls1 = request.form.get('q1')
-            ls2 = request.form.get('q2')
-            ls3 = request.form.get('q3')
-            ls4 = request.form.get('q4')
-            ls5 = request.form.get('q5')
-            ls6 = request.form.get('q6')
-            ls7 = request.form.get('q7')
-            ls8 = request.form.get('q8')
-            ls9 = request.form.get('q9')
-            ls10 = request.form.get('q10')
-            ls11 = request.form.get('q11')
-            ls12 = request.form.get('q12')
-            ls13 = request.form.get('q13')
-            ls14 = request.form.get('q14')
-            ls15 = request.form.get('q15')
-            ls16 = request.form.get('q16')
+            ls1 = int(request.form.get('q1',0))
+            ls2 = int(request.form.get('q2',0))
+            ls3 = int(request.form.get('q3',0))
+            ls4 = int(request.form.get('q4',0))
+            ls5 = int(request.form.get('q5',0))
+            ls6 = int(request.form.get('q6',0))
+            ls7 = int(request.form.get('q7',0))
+            ls8 = int(request.form.get('q8',0))
+            ls9 = int(request.form.get('q9',0))
+            ls10 = int(request.form.get('q10',0))
+            ls11 = int(request.form.get('q11',0))
+            ls12 = int(request.form.get('q12',0))
+            ls13 = int(request.form.get('q13',0))
+            ls14 = int(request.form.get('q14',0))
+            ls15 = int(request.form.get('q15',0))
+            ls16 = int(request.form.get('q16',0))
 
-            resp = int(ls1) + int(ls2) + int(ls3) + int(ls4) + int(ls5) + int(ls6) + int(ls7) + int(ls8) + int(ls9) + int(ls10) + int(ls11) + int(ls12) + int(ls13) + int(ls14) + int(ls15) + int(ls16)
+            resp = ls1 + ls2 + ls3 + ls4 + ls5 + ls6 + ls7 + ls8 + ls9 + ls10 + ls11 + ls12 + ls13 + ls14 + ls15 + ls16
             rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
-            rezz.personality=resp
+            rezz.lifestyle=resp
             db.session.commit()
             return redirect(url_for('personality'))
 
@@ -243,31 +254,31 @@ def personality():
             deets = db.session.query(Results).all()
             return render_template('users/personality.html',user_deets=user_deets,deets=deets)
         else:
-            p1 = request.form.get('q1')
-            p2 = request.form.get('q2')
-            p3 = request.form.get('q3')
-            p4 = request.form.get('q4')
-            p5 = request.form.get('q5')
-            p6 = request.form.get('q6')
-            p7 = request.form.get('q7')
-            p8 = request.form.get('q8')
-            p9 = request.form.get('q9')
-            p10 = request.form.get('q10')
-            p11 = request.form.get('q11')
-            p12 = request.form.get('q12')
-            p13 = request.form.get('q13')
-            p14 = request.form.get('q14')
-            p15 = request.form.get('q15')
-            p16 = request.form.get('q16')
-            p17 = request.form.get('q17')
-            p18 = request.form.get('q18')
-            p19 = request.form.get('q19')
-            p20 = request.form.get('q20')
+            p1 = int(request.form.get('q1',0))
+            p2 = int(request.form.get('q2',0))
+            p3 = int(request.form.get('q3',0))
+            p4 = int(request.form.get('q4',0))
+            p5 = int(request.form.get('q5',0))
+            p6 = int(request.form.get('q6',0))
+            p7 = int(request.form.get('q7',0))
+            p8 = int(request.form.get('q8',0))
+            p9 = int(request.form.get('q9',0))
+            p10 = int(request.form.get('q10',0))
+            p11 = int(request.form.get('q11',0))
+            p12 = int(request.form.get('q12',0))
+            p13 = int(request.form.get('q13',0))
+            p14 = int(request.form.get('q14',0))
+            p15 = int(request.form.get('q15',0))
+            p16 = int(request.form.get('q16',0))
+            p17 = int(request.form.get('q17',0))
+            p18 = int(request.form.get('q18',0))
+            p19 = int(request.form.get('q19',0))
+            p20 = int(request.form.get('q20',0))
 
 
-            resp = int(p1) + int(p2) + int(p3) + int(p4) + int(p5) + int(p6) + int(p7) + int(p8) + int(p9) + int(p10) + int(p11) + int(p12) + int(p13) + int(p14) + int(p15) + int(p16) + int(p17) + int(p18) + int(p19) + int(p20)
+            resp = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10 + p11 + p12 + p13 + p14 + p15 + p16 + p17 + p18 + p19 + p20
             rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
-            rezz.lifestyle=resp
+            rezz.personality=resp
             db.session.commit()
             return redirect(url_for('relationship'))
 
@@ -284,25 +295,24 @@ def relationship():
             deets = db.session.query(Results).all()
             return render_template('users/relationship.html',user_deets=user_deets,deets=deets)
         else:
-            r1 = request.form.get('q1')
-            r2 = request.form.get('q2')
-            r3 = request.form.get('q3')
-            r4 = request.form.get('q4')
-            r5 = request.form.get('q5')
-            r6 = request.form.get('q6')
-            r7 = request.form.get('q7')
-            r8 = request.form.get('q8')
-            r9 = request.form.get('q9')
-            r10 = request.form.get('q10')
-            r11 = request.form.get('q11')
-            r12 = request.form.get('q12')
-            r13 = request.form.get('q13')
-            r14 = request.form.get('q14')
-            r15 = request.form.get('q15')
-            r16 = request.form.get('q16')
+            r1 = int(request.form.get('q1',0))
+            r2 = int(request.form.get('q2',0))
+            r3 = int(request.form.get('q3',0))
+            r4 = int(request.form.get('q4',0))
+            r5 = int(request.form.get('q5',0))
+            r6 = int(request.form.get('q6',0))
+            r7 = int(request.form.get('q7',0))
+            r8 = int(request.form.get('q8',0))
+            r9 = int(request.form.get('q9',0))
+            r10 = int(request.form.get('q10',0))
+            r11 = int(request.form.get('q11',0))
+            r12 = int(request.form.get('q12',0))
+            r13 = int(request.form.get('q13',0))
+            r14 = int(request.form.get('q14',0))
+            r15 = int(request.form.get('q15',0))
+            r16 = int(request.form.get('q16',0))
 
-
-            resp = int(r1) + int(r2) + int(r3) + int(r4) + int(r5) + int(r6) + int(r7) + int(r8) + int(r9) + int(r10) + int(r11) + int(r12) + int(r13) + int(r14) + int(r15) + int(r16)
+            resp = r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9 + r10 + r11 + r12 + r13 + r14 + r15 + r16
             rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
             rezz.relationship=resp
             db.session.commit()
@@ -321,24 +331,24 @@ def symptoms():
             deets = db.session.query(Results).all()
             return render_template('users/symptoms.html',user_deets=user_deets,deets=deets)
         else:
-            s1 = request.form.get('q1')
-            s2 = request.form.get('q2')
-            s3 = request.form.get('q3')
-            s4 = request.form.get('q4')
-            s5 = request.form.get('q5')
-            s6 = request.form.get('q6')
-            s7 = request.form.get('q7')
-            s8 = request.form.get('q8')
-            s9 = request.form.get('q9')
-            s10 = request.form.get('q10')
-            s11 = request.form.get('q11')
-            s12 = request.form.get('q12')
-            s13 = request.form.get('q13')
-            s14 = request.form.get('q14')
-            s15 = request.form.get('q15')
-            s16 = request.form.get('q16')
+            s1 = int(request.form.get('q1',0))
+            s2 = int(request.form.get('q2',0))
+            s3 = int(request.form.get('q3',0))
+            s4 = int(request.form.get('q4',0))
+            s5 = int(request.form.get('q5',0))
+            s6 = int(request.form.get('q6',0))
+            s7 = int(request.form.get('q7',0))
+            s8 = int(request.form.get('q8',0))
+            s9 = int(request.form.get('q9',0))
+            s10 = int(request.form.get('q10',0))
+            s11 = int(request.form.get('q11',0))
+            s12 = int(request.form.get('q12',0))
+            s13 = int(request.form.get('q13',0))
+            s14 = int(request.form.get('q14',0))
+            s15 = int(request.form.get('q15',0))
+            s16 = int(request.form.get('q16',0))
 
-            resp = int(s1) + int(s2) + int(s3) + int(s4) + int(s5) + int(s6) + int(s7) + int(s8) + int(s9) + int(s10) + int(s11) + int(s12) + int(s13) + int(s14) + int(s15) + int(s16)
+            resp = s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14 + s15 + s16
             rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
             rezz.symptoms=resp
             db.session.commit()
@@ -348,16 +358,18 @@ def symptoms():
 @app.route('/result', methods=['GET','POST'])
 def result():
     if session.get('loggedin') ==None:
-        flash('Please sign in to take the various categories of Evaluation Tests','warning')
+        flash('Please sign in to view result','warning')
         return redirect('/') 
     else:
         id = session['loggedin']
+        allresults = Results.query.order_by(desc(Results.user_id)).all()
         pfie = Results.query.order_by(Results.res_sl_id.desc()).first() 
         mdeets = Users.query.order_by(Users.user_id).all()
         userdeets = db.session.query(Users).get(id)
-        total = pfie.employment + pfie.environment + pfie.lifestyle + pfie.personality + pfie.relationship + pfie.symptoms 
+        sed_total = pfie.employment + pfie.environment + pfie.lifestyle + pfie.personality + pfie.relationship + pfie.symptoms 
         if request.method=='GET':
-            return render_template('users/result.html', pfie=pfie,mdeets=mdeets,total=total,id=id,userdeets=userdeets)
+            allresults = Results.query.order_by(desc(Results.user_id)).all()
+            return render_template('users/result.html', pfie=pfie,mdeets=mdeets,sed_total=sed_total,id=id,userdeets=userdeets,allresults=allresults)
 
 
 @app.route('/result_sed', methods=['GET','POST'])
@@ -386,7 +398,7 @@ def result_social():
         pfie = Results.query.order_by(Results.res_sl_id.desc()).first() 
         mdeets = Users.query.order_by(Users.user_id).all()
         userdeets = db.session.query(Users).get(id)
-        total = pfie.sed_life_conval 
+        total = pfie.social 
         if request.method=='GET':
             return render_template('users/result_social.html', pfie=pfie,mdeets=mdeets,total=total,id=id,userdeets=userdeets)
 
@@ -394,13 +406,17 @@ def result_social():
 
 @app.route('/print_result1')
 def print_result1():
-    catname = db.session.query(Categories.cat_name).all()
-    catpoint= db.session.query(Categories.cat_point).all()
-    alldeets = db.session.query(Categories).all()
-    deets = db.session.query(Categories.total_score).filter(Categories.cat_name=='total').one()
-    mdeets = db.session.query(Categories.cat_id).all()
+    if session.get('loggedin') ==None:
+        flash('Please sign in to take the various categories of Evaluation Tests','warning')
+        return redirect('/')
+    else:
+        id = session.get('loggedin')
+        allresults = Results.query.order_by(desc(Results.user_id)).first()        
+        pfie = Results.query.order_by(Results.res_sl_id.desc()).first() 
 
-    return render_template('users/print_result1.html', deets=deets,mdeets=mdeets,catpoint=catpoint,catname=catname,alldeets=alldeets)
+        deets = pfie.employment + pfie.environment + pfie.lifestyle + pfie.personality + pfie.relationship + pfie.symptoms
+
+        return render_template('users/print_result1.html', allresults=allresults, deets=deets)
 
 
 @app.route('/step2', methods=['GET','POST'])
@@ -426,7 +442,6 @@ def step2():
                 rezz.symptoms=rezz.symptoms + 3
                 db.session.commit()
                 return redirect(url_for('step3'))
-
 
 
 @app.route('/step3', methods=['GET','POST'])
@@ -466,35 +481,35 @@ def sed_lifestyle():
             deets = db.session.query(Results).all()
             return render_template('users/sedentary_lifestyle.html',user_deets=user_deets,deets=deets)
         else:
-            slt1 = request.form.get('sl1')
-            slt2 = request.form.get('sl2')
-            slt3 = request.form.get('sl3')
-            slt4 = request.form.get('sl4')
-            slt5 = request.form.get('sl5')
-            slt6 = request.form.get('sl6')
-            slt7 = request.form.get('sl7')
-            slt8 = request.form.get('sl8')
-            slt9 = request.form.get('sl9')
-            slt10 = request.form.get('sl10')
-            slt11 = request.form.get('sl11')
-            slt12 = request.form.get('sl12')
-            slt13 = request.form.get('sl13')
-            slt14 = request.form.get('sl14')
-            slt15 = request.form.get('sl15')
-            slt16 = request.form.get('sl16')
-            slt17 = request.form.get('sl17')
+            slt1 = float(request.form.get('sl1',0.0))
+            slt2 = float(request.form.get('sl2',0.0))
+            slt3 = float(request.form.get('sl3',0.0))
+            slt4 = float(request.form.get('sl4',0.0))
+            slt5 = float(request.form.get('sl5',0.0))
+            slt6 = float(request.form.get('sl6',0.0))
+            slt7 = float(request.form.get('sl7',0.0))
+            slt8 = float(request.form.get('sl8',0.0))
+            slt9 = float(request.form.get('sl9',0.0))
+            slt10 = float(request.form.get('sl10',0.0))
+            slt11 = float(request.form.get('sl11',0.0))
+            slt12 = float(request.form.get('sl12',0.0))
+            slt13 = float(request.form.get('sl13',0.0))
+            slt14 = float(request.form.get('sl14',0.0))
+            slt15 = float(request.form.get('sl15',0.0))
+            slt16 = float(request.form.get('sl16',0.0))
+            slt17 = float(request.form.get('sl17',0.0))
 
             if slt1=='' or slt2=='' or slt3=='' or slt4=='' or slt5=='' or slt6=='' or slt7=='' or slt8=='' or slt9=='' or slt10=='' or slt11=='' or slt12=='' or slt13=='' or slt14=='' or slt15=='' or slt16=='' or slt17=='':
                 flash('Kindly fill all the fields ','danger')
                 return render_template('users/sedentary_lifestyle.html')
             else:
-                resp = float(slt1) + float(slt2) + float(slt3) + float(slt4) + float(slt5) + float(slt6) + float(slt7) + float(slt8) + float(slt9) + float(slt10) + float(slt11) + float(slt12) + float(slt13) + float(slt14) + float(slt15) + float(slt16) + float(slt17)
+                resp = slt1 + slt2 + slt3 + slt4 + slt5 + slt6 + slt7 + slt8 + slt9 + slt10 + slt11 + slt12 + slt13 + slt14 + slt15 + slt16 + slt17
 
                 if resp >24:
                     flash('Kindly review your input for you cannot have more than 24 hours in a day','danger')
                     return render_template('users/sedentary_lifestyle.html')
                 else:
-                    conval = float(slt1)*0.8 + float(slt2)*0.8 + float(slt3)*1.5 + float(slt4)*1.5 + float(slt5)*1.5 + float(slt6)*1.5 + float(slt7)*1.5 + float(slt8)*2 + float(slt9)*3 + float(slt10)*4 + float(slt11)*5 + float(slt12)*3 + float(slt13)*4 + float(slt14)*5 + float(slt15)*7 + float(slt16)*8 + float(slt17)*9
+                    conval = slt1*0.8 + slt2*0.8 + slt3*1.5 + slt4*1.5 + slt5*1.5 + slt6*1.5 + slt7*1.5 + slt8*2 + slt9*3 + slt10*4 + slt11*5 + slt12*3 + slt13*4 + slt14*5 + slt15*7 + slt16*8 + slt17*9
 
                     rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
                     rezz.sed_life_hrs=resp
@@ -503,6 +518,13 @@ def sed_lifestyle():
                     db.session.commit()
                     return redirect(url_for('result_sed'))
 
+
+@app.route('/payment')
+def payment():
+    cid = session.get('loggedin')
+    deets = db.session.query(Users).filter(Users.user_id==cid).first()
+    alluser = db.session.query(Users).filter(Users.user_id==cid).first()
+    return render_template('users/payment.html',deets=deets, alluser=alluser)
 
 @app.route('/social', methods=['GET','POST'])
 def social():
@@ -516,59 +538,57 @@ def social():
             deets = db.session.query(Results).all()
             return render_template('users/social.html',user_deets=user_deets,deets=deets)
         else:
-            soc1 = request.form.get('dos1')
-            soc2 = request.form.get('dos2')
-            soc3 = request.form.get('dos3')
-            soc4 = request.form.get('dos4')
-            soc5 = request.form.get('dos5')
-            soc6 = request.form.get('dos6')
-            soc7 = request.form.get('dos7')
-            soc8 = request.form.get('dos8')
-            soc9 = request.form.get('dos9')
-            soc10 = request.form.get('dos10')
-            soc11 = request.form.get('dos11')
-            soc12 = request.form.get('dos12')
-            soc13 = request.form.get('dos13')
-            soc14 = request.form.get('dos14')
-            soc15 = request.form.get('dos15')
-            soc16 = request.form.get('dos16')
-            soc17 = request.form.get('dos17')
-            soc18 = request.form.get('dos18')
-            soc19 = request.form.get('dos19')
-            soc20 = request.form.get('dos20')
-            soc21 = request.form.get('dos21')
-            soc22 = request.form.get('dos22')
-            soc23 = request.form.get('dos23')
-            soc24 = request.form.get('dos24')
-            soc25 = request.form.get('dos25')
-            soc26 = request.form.get('dos26')
-            soc27 = request.form.get('dos27')
-            soc28 = request.form.get('dos28')
-            soc29 = request.form.get('dos29')
-            soc30 = request.form.get('dos30')
-            soc31 = request.form.get('dos31')
-            soc32 = request.form.get('dos32')
-            soc33 = request.form.get('dos33')
-            soc34 = request.form.get('dos34')
-            soc35 = request.form.get('dos35')
-            soc36 = request.form.get('dos36')
-            soc37 = request.form.get('dos37')
-            soc38 = request.form.get('dos38')
-            soc39 = request.form.get('dos39')
-            soc40 = request.form.get('dos40')
-            soc41 = request.form.get('dos41')
-            soc42 = request.form.get('dos42')
-            soc43 = request.form.get('dos43')
-            soc44 = request.form.get('dos44')
+            int(request.form.get('dos1', 0))
+            
+            soc1 = int(request.form.get('dos1',0))
+            soc2 = int(request.form.get('dos2',0))
+            soc3 = int(request.form.get('dos3',0))
+            soc4 = int(request.form.get('dos4',0))
+            soc5 = int(request.form.get('dos5',0))
+            soc6 = int(request.form.get('dos6',0))
+            soc7 = int(request.form.get('dos7',0))
+            soc8 = int(request.form.get('dos8',0))
+            soc9 = int(request.form.get('dos9',0))
+            soc10 = int(request.form.get('dos10',0))
+            soc11 = int(request.form.get('dos11',0))
+            soc12 = int(request.form.get('dos12',0))
+            soc13 = int(request.form.get('dos13',0))
+            soc14 = int(request.form.get('dos14',0))
+            soc15 = int(request.form.get('dos15',0))
+            soc16 = int(request.form.get('dos16',0))
+            soc17 = int(request.form.get('dos17',0))
+            soc18 = int(request.form.get('dos18',0))
+            soc19 = int(request.form.get('dos19',0))
+            soc20 = int(request.form.get('dos20',0))
+            soc21 = int(request.form.get('dos21',0))
+            soc22 = int(request.form.get('dos22',0))
+            soc23 = int(request.form.get('dos23',0))
+            soc24 = int(request.form.get('dos24',0))
+            soc25 = int(request.form.get('dos25',0))
+            soc26 = int(request.form.get('dos26',0))
+            soc27 = int(request.form.get('dos27',0))
+            soc28 = int(request.form.get('dos28',0))
+            soc29 = int(request.form.get('dos29',0))
+            soc30 = int(request.form.get('dos30',0))
+            soc31 = int(request.form.get('dos31',0))
+            soc32 = int(request.form.get('dos32',0))
+            soc33 = int(request.form.get('dos33',0))
+            soc34 = int(request.form.get('dos34',0))
+            soc35 = int(request.form.get('dos35',0))
+            soc36 = int(request.form.get('dos36',0))
+            soc37 = int(request.form.get('dos37',0))
+            soc38 = int(request.form.get('dos38',0))
+            soc39 = int(request.form.get('dos39',0))
+            soc40 = int(request.form.get('dos40',0))
+            soc41 = int(request.form.get('dos41',0))
+            soc42 = int(request.form.get('dos42',0))
+            soc43 = int(request.form.get('dos43',0))
+            soc44 = int(request.form.get('dos44',0))
 
-            resp = int(soc1) + int(soc2) + int(soc3) + int(soc4) + int(soc5) + int(soc6) + int(soc7) + int(soc8) + int(soc9) + int(soc10) + int(soc11) + int(soc12) + int(soc13) + int(soc14) + int(soc15) + int(soc16) + int(soc17) + int(soc18) + int(soc19) + int(soc20) + int(soc21) + int(soc22) + int(soc23) + int(soc24) + int(soc25) + int(soc26) + int(soc27) + int(soc28) + int(soc29) + int(soc30) + int(soc31) + int(soc32) + int(soc33) + int(soc34) + int(soc35) + int(soc36) + int(soc37) + int(soc38) + int(soc39) + int(soc40) + int(soc41) + int(soc42) + int(soc43) + int(soc44)
+            resp = soc1 + soc2 + soc3 + soc4 + soc5 + soc6 + soc7 + soc8 + soc9 + soc10 + soc11 + soc12 + soc13 + soc14 + soc15 + soc16 + soc17 + soc18 + soc19 + soc20 + soc21 + soc22 + soc23 + soc24 + soc25 + soc26 + soc27 + soc28 + soc29 + soc30 + soc31 + soc32 + soc33 + soc34 + soc35 + soc36 + soc37 + soc38 + soc39 + soc40 + soc41 + soc42 + soc43 + soc44
             rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
             rezz.social=resp
             db.session.commit()
             return redirect(url_for('result_social'))
 
-
-@app.route('/bridals', methods=['GET','POST'])
-def bridals():
-    return render_template('users/bridals.html')
         

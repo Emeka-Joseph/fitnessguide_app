@@ -36,6 +36,11 @@ class Payment(db.Model):
     pay_userid = db.Column(db.Integer,db.ForeignKey('users.user_id'), nullable=True)
 
 
+class Voucher(db.Model):
+    voucher_id = db.Column(db.Integer, primary_key=True)
+    voucher_code = db.Column(db.String(15), unique=True, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+
 class Employment(db.Model):
     q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     item = db.Column(db.String(255),nullable=False)

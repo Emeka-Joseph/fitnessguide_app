@@ -53,3 +53,7 @@ window.onload=changeImg;
 //         window.location.href = '/tours';
 //     });
 // });
+
+
+
+ 

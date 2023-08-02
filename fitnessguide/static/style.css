@@ -66,3 +66,7 @@ section ul {
 section li {
 	float: left;
 }
+
+div {
+	border: 1px solid blue;
+}

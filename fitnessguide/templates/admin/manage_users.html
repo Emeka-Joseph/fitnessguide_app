@@ -1,0 +1,41 @@
+{% extends 'admin/admin_index.html' %}
+
+{% block dash %} 
+<div class="row" style="display: flex; justify-content: center; background-color:  rgb(3, 3, 93);">
+    <div class="col-md-10" id="result_column" >
+        <h4 class="my-5" style="color: white;">The List below contains all the users on the platform </h4>    
+            <table class="table table-bordered mt-5" style="color: white">
+
+                <button class="btn btn-danger" onclick="
+                    var name = prompt('What is your name?')
+                    alert('Welcome Dear ' + name)
+                    ">just Click Me</button>
+                <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>First Name</th>
+                        <th>Last Name</th> 
+                        <th>Email Address</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    {% for i in allusers %}
+ 
+                    <tr >
+                        <td class="cat">{{ loop.index }}</td>
+                        <td class="cat"> {{i.user_fname}}  </td>
+                        <td class="cat"> {{i.user_lname}}  </td>
+                        <td class="cat"> {{i.user_email}}  </td>
+                        <td class="cat"> {{i.user_phone}}  </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+    </div>
+</div> 
+{% endblock %}
+
