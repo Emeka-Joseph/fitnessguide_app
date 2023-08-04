@@ -8,7 +8,7 @@
 <div class="row" style="display: flex; justify-content: center;">
     <div class="col-md-10" id="result_column" >
         <h2 class="mt-5" style="color: white;">Result for the Social Readjustment Scale Test</h2>
-            <p style="color: rgb(251, 249, 249);">The total points referred to above is the accumulation of a complete year. 
+            <p style="color: rgb(251, 249, 249);">The total points referred to below is the accumulation of a complete year. 
                 In conclusion, although these items are relative according to ethnic, norms culture and individuals, many people benefited from the scale which was developed by the doctors Richard H. Rahe and Thoma H Holmes. Notice that some events which are considered to be positive (marriage, a personal accomplishment, or even vacation) are also stressful.  Some psychologists have adapted this test to give the same points as those given marriage separation or divorce to unfaithfulness by the marriage partner. Also notice that change in religious activity is not significant. 
                 </p>
             <h6 class="mt-5" style="color: white;"> <strong style="color:yellow; font-size: 1.4em;"> {{ userdeets.user_fname }} </strong>, with respect to the Test just carried out, your total score point is {% if session.get('loggedin')!=None %} {{ total }} </h6>
@@ -62,7 +62,7 @@
             <div style="display: flex; justify-content: space-around;">
                 <a href="#" class="btn btn-lg btn-light justify-self-center" id="downloadBtnb">Click Print Result</a> 
             
-                <a href="{{url_for('home')}}" class="btn btn-lg btn-outline-info justify-self-center">Click Return Home</a>
+                <a href="{{url_for('flush')}}" class="btn btn-lg btn-outline-info justify-self-center">Click Return Home</a>
                 
                 
             </div>

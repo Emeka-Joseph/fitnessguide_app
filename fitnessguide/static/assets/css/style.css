@@ -25,8 +25,6 @@ body{
 	width:100%;
 }
 
-*{
-	box-sizing:border-box;
 
 .menu-items {
 	display: none; /* Hide the menu items by default */
@@ -237,9 +235,11 @@ left:180px;
 	color:#F2E7C9;
 	position:relative;
 	top:10%;
-	left:14%;
+	/*left:14%;*/
+
 	border:none;
 }
+
 .test_left p, ol li{
 	color:#ffffff;
 	position: relative;
@@ -275,6 +275,33 @@ left:180px;
 	position:relative;
   
 }
+
+/* Add styling to the table and its container */
+.table-container{
+	overflow-x: auto; /* Enable horizontal scrolling */
+	max-width: 100%; /* Ensure the table doesn't overflow its container */
+  }
+  
+  table {
+	width: 100%; /* Make the table occupy the full width of its container */
+	border-collapse: collapse; /* Optional: Collapses table borders */
+  }
+  
+  /* Optional: Add styling to table headers and cells 
+  th, td {
+	padding: 8px;
+	border: 1px solid #ddd;
+  }
+  
+  th {
+	background-color: #f2f2f2;
+  }
+  */
+  /* Optional: Add styling to alternate table rows for better readability 
+  tr:nth-child(even) {
+	background-color: #f2f2f2;
+  }
+  */
 
 
 #intro{
@@ -502,7 +529,7 @@ article{
 
 
 div{
-	border: 2px solid rgb(182, 24, 24)
+	border: 0px solid brown;
 }
 
 /* styles.css */
@@ -561,8 +588,8 @@ background-color: #ccc;
 border-radius: 10px;
 }
 .chart4{
-background-color:#f6f8f9;
-border: px solid #32CD33;
+background-color:#2880ac;
+border: 1px solid #32CD33;
 
 
 }

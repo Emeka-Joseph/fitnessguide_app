@@ -1,26 +1,16 @@
 import os,random
 from flask import render_template, redirect, flash, session, request, url_for
-from fitnessguide.models import Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher, Readjustment,Sed_Lifestyle,Results,Contact
+from fitnessguide.models import Admin,Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher,Payment, Readjustment,Sed_Lifestyle,Results,Contact
 from fitnessguide import app, db
-from fitnessguide.forms import LoginForm, SignUpForm, ContactForm
+from fitnessguide.forms import AdminLoginForm, ContactForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import text
 from sqlalchemy import desc,asc,or_,func
-
 from datetime import datetime
-
-
-
 import string
 
 def generate():
     return ''.join(random.choices(string.digits, k=15))
-
-
-
-def generate_name(): 
-    filename = random.sample(String.ascii_lowercase,10) 
-    return ''.join(filename)
 
 
 def generate():
@@ -49,52 +39,125 @@ def generate_voucher():
     return redirect(url_for('manage_payment'))
 
 
-'''@app.route('/generate_voucher', methods=['POST'])
-def generate_voucher():
-    if request.method == 'POST':
-        for _ in range(10):  # Replace 10 with the number of voucher codes you want to generate.
-            voucher_code = generate()
-            date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            # Insert the generated voucher code and date into the database using ORM (Assuming you have a 'Voucher' model defined)
-            voucher = Voucher(voucher_code=voucher_code, date=date)
-            db.session.add(voucher)
-            db.session.commit()
+@app.route('/AdminLogin', methods = (["GET", "POST"]), strict_slashes = False)
+def AdminLogin():
+    form = AdminLoginForm()
+    if request.method=='GET':
+        return render_template('admin/login.html', title="Admin Login", form=form)
+    else:
+        if form.validate_on_submit:
+            email = form.email.data
+            password = form.password.data
+            #deets = db.session.query(Users).filter(Users.user_email==email).first()
+            if email !="" and password !="":
+                admin = db.session.query(Admin).filter(Admin.admin_email==email).first() 
+                if admin !=None:
+                    pwd =admin.admin_password
+                    chk = db.session.query(Admin).filter(Admin.admin_password==password).first()
+                    if chk:
+                        id = admin.admin_id
+                        session['Administrator'] = id
+                        return redirect(url_for('admin_index'))
+                    else:
+                        flash('Invalid email or password', "danger")
+                        return redirect(url_for('AdminLogin'))
+                else:
+                    flash("Ensure that your login details are correct, or signup to create an account", "danger")  
+                    return redirect(url_for('AdminLogin'))     
+        else:
+            flash("You must complete all fields", "danger")
+            return redirect(url_for("AdminLogin"))
 
-    return redirect('/') 
-'''
 
-@app.route('/admin_dashboard')
-def admin_dashboard():
-    allusers = db.session.query(Users).all()
-    allresults = db.session.query(Results).all()
-    allvouchers = db.sesison.query(Voucher).all()
-    return render_template('admin/admin_dashboard.html',allusers=allusers,allresults=allresults,allvouchers=allvouchers)
 
 @app.route('/admin_index')
 def admin_index():
-    allusers = db.session.query(Users).all()
-    allresults = db.session.query(Results).all()
-    return render_template('admin/admin_index.html',allusers=allusers,allresults=allresults)
+   
+    id = session.get('Administrator')
+    if id ==None:
+        flash('Please sign in as the Admin','warning')
+        return redirect('/AdminLogin') 
+    else:
+        allusers = db.session.query(Users).all()
+        allresults = db.session.query(Results).all()
+        pool = db.session.query(func.sum(Users.user_id)).scalar()
+        allpayment = db.session.query(func.sum(Payment.pay_amount)).scalar()
+        real_admin = db.session.query(Admin).filter(Admin.admin_id==id).first()
+        allmessages = db.session.query(Contact).all()
+        return render_template('admin/admin_index.html',allusers=allusers,allresults=allresults,pool=pool,allmessages=allmessages,allpayment=allpayment,real_admin=real_admin)
 
 @app.route('/manage_users')
 def manage_users():
-    allusers = db.session.query(Users).all()
-    allresults = db.session.query(Results).all()
-    return render_template('admin/manage_users.html',allusers=allusers,allresults=allresults)
-
-
+    id = session.get('Administrator')
+    if id ==None:
+        flash('Please sign in as the Admin','warning')
+        return redirect('/AdminLogin') 
+    else:
+        allusers = db.session.query(Users).all()
+        allresults = db.session.query(Results).all()
+        return render_template('admin/manage_users.html',allusers=allusers,allresults=allresults)
 
 
 @app.route('/manage_results')
 def manage_results():
-    allusers = db.session.query(Users).all()
-    allresults = db.session.query(Results).all()
-    return render_template('admin/manage_results.html',allusers=allusers,allresults=allresults)
+    id = session.get('Administrator')
+    if id ==None:
+        flash('Please sign in as the Admin','warning')
+        return redirect('/AdminLogin') 
+    else:
+        allusers = db.session.query(Users).all()
+        allresults = db.session.query(Results).all()
+        return render_template('admin/manage_results.html',allusers=allusers,allresults=allresults)
 
 
 @app.route('/manage_payment')
 def manage_payment():
-    allusers = db.session.query(Users).all()
-    allresults = db.session.query(Results).all()
-    allvouchers = db.session.query(Voucher).all()
-    return render_template('admin/manage_payment.html',allusers=allusers,allresults=allresults,allvouchers=allvouchers)
+    id = session.get('Administrator')
+    if id ==None:
+        flash('Please sign in as the Admin','warning')
+        return redirect('/AdminLogin') 
+    else:
+        allusers = db.session.query(Users).all()
+        allresults = db.session.query(Results).all()
+        allvouchers = db.session.query(Voucher).all()
+        deets = db.session.query(Payment).all()
+        return render_template('admin/manage_payment.html',allusers=allusers,allresults=allresults,allvouchers=allvouchers,deets=deets)
+
+
+
+@app.route('/manage_messages')
+def manage_messages():
+    id = session.get('Administrator')
+    if id ==None:
+        flash('Please sign in as the Admin','warning')
+        return redirect('/AdminLogin') 
+    else:
+        allusers = db.session.query(Users).all()
+        allmessages = db.session.query(Contact).all()
+        return render_template('admin/manage_messages.html',allusers=allusers,allmessages=allmessages)
+
+
+@app.route('/delete/<int:id>')
+def delete(id): 
+    allusers=db.session.query(Users).all()
+    user_to_del=Users.query.get_or_404(id)
+    userobj =   Users.query.get_or_404(id)
+    try:
+        db.session.delete(userobj)
+        db.session.commit()
+        flash('user deleted successfully')
+        deet_user = Users.query.order_by(Users.user_id) 
+        return redirect(url_for('admin_index'))
+        
+    except:
+        flash('whoops, there was a problem deleting the user')
+        return redirect(url_for('admin_index'))
+    
+
+
+@app.route('/adminlogout')
+def admin_logout():
+    #pop the session redirect to home page
+    if session.get('Administrator')!=None:
+        session.pop('Administrator',None)
+    return redirect(url_for('AdminLogin'))

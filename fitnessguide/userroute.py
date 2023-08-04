@@ -1,11 +1,12 @@
 import os,random
 from datetime import datetime
 from flask import render_template, redirect, flash, session, request, url_for
-from fitnessguide.models import Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher,Readjustment,Sed_Lifestyle,Results,Contact
+from fitnessguide.models import Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher,Readjustment,Sed_Lifestyle,Results,Contact,Payment
 from fitnessguide import app, db
 from fitnessguide.forms import LoginForm, SignUpForm, ContactForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import text
+
 from sqlalchemy import desc,asc,or_,func
 
 import string
@@ -73,8 +74,8 @@ def signup():
                 user_pwd = hashed_password, gender='',user_phone='',social_rs='',sed_ls='',sed_lie='')
                 db.session.add(new_user)
                 db.session.commit()
-                userid = new_user.user_id
-                session['loggedin']=userid
+                #userid = new_user.user_id
+                #session['loggedin']=userid
                 flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
                 return redirect(url_for('login'))
             else:
@@ -385,23 +386,6 @@ def result_sed():
         total = pfie.sed_life_conval 
         if request.method=='GET':
             return render_template('users/result_sedlife.html', pfie=pfie,mdeets=mdeets,total=total,id=id,userdeets=userdeets)
-
-
-
-@app.route('/result_social', methods=['GET','POST'])
-def result_social():
-    if session.get('loggedin') ==None:
-        flash('Please sign in to take the various categories of Evaluation Tests','warning')
-        return redirect('/') 
-    else:
-        id = session['loggedin']
-        pfie = Results.query.order_by(Results.res_sl_id.desc()).first() 
-        mdeets = Users.query.order_by(Users.user_id).all()
-        userdeets = db.session.query(Users).get(id)
-        total = pfie.social 
-        if request.method=='GET':
-            return render_template('users/result_social.html', pfie=pfie,mdeets=mdeets,total=total,id=id,userdeets=userdeets)
-
    
 
 @app.route('/print_result1')
@@ -436,12 +420,18 @@ def step2():
             s3 = request.form.get('q3')
             s4 = request.form.get('q4')
             s5 = request.form.get('q5')
+            rezz = Results.query.order_by(Results.res_sl_id.desc()).first()
             if s1=='yes' or s2=='yes' or  s3=='yes' or s4=='yes' or s5=='yes':
-                m = 3
-                rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
+                m = 3 
                 rezz.symptoms=rezz.symptoms + 3
                 db.session.commit()
                 return redirect(url_for('step3'))
+            else:
+                rezz.symptoms=rezz.symptoms + 0
+                db.session.commit()
+                return redirect(url_for('step3'))
+          
+
 
 
 @app.route('/step3', methods=['GET','POST'])
@@ -461,12 +451,15 @@ def step3():
             s3 = request.form.get('q3')
             s4 = request.form.get('q4')
             s5 = request.form.get('q5')
-
+            rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
             if s1=='yes' or s2=='yes' or  s3=='yes' or s4=='yes' or s5=='yes':
-                rezz = Results.query.order_by(Results.res_sl_id.desc()).first() 
                 rezz.symptoms=rezz.symptoms + 2
                 db.session.commit()
-                return redirect(url_for('result'))
+                return redirect(url_for('verify_pay'))
+            else:
+                rezz.symptoms=rezz.symptoms + 0
+                db.session.commit()
+                return redirect(url_for('verify_pay'))
 
 
 @app.route('/sed_lifestyle', methods=['GET','POST'])
@@ -519,12 +512,67 @@ def sed_lifestyle():
                     return redirect(url_for('result_sed'))
 
 
-@app.route('/payment')
+@app.route('/payment', methods=['GET','POST'])
 def payment():
     cid = session.get('loggedin')
-    deets = db.session.query(Users).filter(Users.user_id==cid).first()
-    alluser = db.session.query(Users).filter(Users.user_id==cid).first()
-    return render_template('users/payment.html',deets=deets, alluser=alluser)
+    if cid==None:
+        flash('Please login to view the payment page','warning')
+        return redirect('/')
+    else:
+        if request.method=='GET':
+            deets = db.session.query(Users).filter(Users.user_id==cid).first()
+            alluser = db.session.query(Users).filter(Users.user_id==cid).first()
+            return render_template('users/payment.html',deets=deets, alluser=alluser)
+        else:
+            p_name = request.form.get('pay_name')
+            amount = request.form.get('amount')
+            narration = request.form.get('narration')
+            file = request.files['pop'] 
+            filename = file.filename 
+            filetype = file.mimetype
+            allowed = ['.png','.jpg','.jpeg','.pdf','vif']
+            if filename !='':
+                #upload
+                name,ext = os.path.splitext(filename) 
+                #import os on line 1
+                if ext.lower() in allowed:
+                    newname = generate_name()+ext
+                    file.save("fitnessguide/static/uploads/"+newname)
+                    #dpid = db.session.query(Users).get(session['loggedin'])
+
+                    payment_update = Payment(pay_name=p_name,pay_amount=amount,narration=narration,pay_pop=newname,pay_userid=cid)
+                    db.session.add(payment_update)
+                    db.session.commit()
+                    flash('File uploaded successfully','success')
+                    return redirect(url_for('payment'))
+                else:
+                        return 'File extension not allowed ','danger'
+            else:
+                flash('Please chose a file','warning')
+
+
+@app.route('/verify_payment', methods=['GET','POST'])
+def verify_pay():
+    id = session.get('loggedin')
+    if id==None:
+        flash('Please login to continue','warning')
+        return redirect('/')
+    else:
+        if request.method=='GET':
+            deets = db.session.query(Users).filter(Users.user_id==id).first()
+            alluser = db.session.query(Users).filter(Users.user_id==id).first()
+            return render_template('users/verify_payment.html',deets=deets, alluser=alluser)
+        else:
+            vouch = request.form.get('voucher')
+            check_voucher = db.session.query(Voucher).filter(Voucher.voucher_code==vouch).first()
+            if check_voucher==None:
+                flash('Kindly make sure that you entered the correct voucher or purchase one if you haven"t done so','warning')
+                return redirect('/verify_payment')
+            else:
+                check_voucher.voucher_userid=id
+                db.session.commit()
+                return redirect('result')
+
 
 @app.route('/social', methods=['GET','POST'])
 def social():
@@ -590,5 +638,53 @@ def social():
             rezz.social=resp
             db.session.commit()
             return redirect(url_for('result_social'))
-
         
+
+@app.route('/result_social', methods=['GET','POST'])
+def result_social():
+    if session.get('loggedin') ==None:
+        flash('Please sign in to take the various categories of Evaluation Tests','warning')
+        return redirect('/') 
+    else:
+        id = session['loggedin']
+        pfie = Results.query.order_by(Results.res_sl_id.desc()).first() 
+        mdeets = Users.query.order_by(Users.user_id).all()
+        userdeets = db.session.query(Users).get(id)
+        total = pfie.social 
+        if request.method=='GET':
+            return render_template('users/result_social.html', pfie=pfie,mdeets=mdeets,total=total,id=id,userdeets=userdeets)
+
+
+
+@app.route('/flush')
+def flush():
+    id = session.get('loggedin')
+    vouch2 = db.session.query(Voucher).filter(Voucher.voucher_userid==id).first()
+    if vouch2==None:
+        flash('Thank you for taking these vital fitness test, hope the results would be useful to you in your choices of lifestyle')
+        return redirect('/')
+    else:
+        voucher_to_delete = Voucher.query.filter_by(voucher_userid=id).first()
+
+        db.session.delete(voucher_to_delete)
+        db.session.commit()
+        flash('Thank you for taking these vital fitness test, hope the results would be useful to you in your choices of lifestyle')
+        return redirect(url_for('home'))
+
+
+
+@app.errorhandler(404)
+def pagenotfound(error):
+    cid = session['loggedin']
+    alluser = db.session.query(Users).filter(Users.user_id==cid).first()
+    return render_template('users/error404.html',alluser=alluser, error=error),404
+
+
+@app.errorhandler(500)
+def internalerror(error):
+    cid = session['loggedin']
+    alluser = db.session.query(Users).filter(Users.user_id==cid).first()
+    ''' For you to see this in action, ensure the debug mode is set to False'''
+    return render_template('users/error500.html',alluser=alluser, error=error),500
+
+

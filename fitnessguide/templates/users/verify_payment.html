@@ -68,67 +68,20 @@
                  <br>
           </p> 
 
-          <h2 style="color: red;"><STRong>Note:</STRong></h2>
-          <ul>
-              <li>
-                <b>What is a Voucher?</b>: This is a unique Code that grants you the access to view, print or download your results after a complete Fitness Evaluation Test Session
-              </li>
-              <li>
-                <b>Cost</b>: For the Results of a complete Fitness Evaluation Test Session, one voucher is needed and it cost <strong><STRIke>N</STRIke>4,000.00 OR &dollar;5.00 </strong>
-              </li>
-              
-              <li>
-                <strong>Voucher Usage:</strong> If you desire to take the tests several times, then you can buy as many vouchers as you wish to. Also, if you have a fitness outfit and wishes to partner with us, then there is a discount of up to 30% for you when you want purchase a minimum of 20 vouchers per time
-              </li>
+        </div>  
 
-              <li>
-                <strong>Payment Confirmation:</strong> For fast payment confirmation, contact the whatsapp line at the contact section or click on this whatsapp logo 
-                
-                <a href="tel:+2348051140072" style="font-size: 2em; color: yellow;"><i class="fa fa-whatsapp mx-3" aria-hidden="true"></i></a>
-              </li>
-
-          </ul>
-      </div>  
-
-      <div class="col-md-4 " >
-          <h5 style="color: red;"><strong>NAIRA DETAILS</strong></h5>
-          <p> 
-            <strong>Bank Name:</strong> Guarant Trust Bank <br>
-            <strong>Account Number:</strong> 0157954950  <br>
-            <strong>Account Name:</strong> Fitness Guide International   <br>
-          </p> 
-      </div>
-
-      <div class="col-md-4">
-            <h5 style="color: red;"><strong>DOMICILIARY DETAILS</strong></h5>
-          <p> 
-            <strong>Bank Name:</strong> Guarant Trust Bank <br>
-            <strong>Account Number:</strong> 0011826706  <br>
-            <strong>Account Name:</strong> Fitness Guide International   <br>
-          </p>    
-      </div>
     </div> 
 
     <div class="row d-flex justify-content-center mt-5">
       <div class="col-md-4">
-        <h5 style="font-weight: bolder;">kindly provide your Proof of Payment and you will get your voucher as soon as payment is confirmed in your email or phone number provided</h5>
+        <h5 style="font-weight: bolder;">kindly provide your voucher in order to have access to the results</h5>
 
-        <form action="" method="post" enctype="multipart/form-data">
-          <label for="name" class="mt-2">Name</label>
-          <input type="text" id="name" name="pay_name" class="form-control" placeholder="Name as it appears on the payment" required>
-          
-          <label for="name" class="mt-2">Amount Paid</label>
-          <input type="number" id="amount" name="amount" class="form-control mb-2" placeholder="Amount paid" required>
+        <form action="" method="post">
+          <label for="voucher" class="mt-2">Enter Voucher Code</label>
+          <input type="text" id="voucher" name="voucher" class="form-control" placeholder="123567890....." required>
+          <button class="btn btn-primary">Submit</button> 
 
-          <label for="narration">Narration</label>
-          <input type="text" id="narration"  name="narration" class="form-control mb-2" placeholder="Narration" required>
-
-          <label for="pop">Upload POP</label>
-          <input type="file" name="pop">
-
-          <button class="btn btn-primary">Submit</button>
-
-
+          <a href="{{url_for('payment')}}" target="_blank" class="btn-dark text-light btn-outline-primary">Or Click here to Purchase a Voucher</a>
 
         </form>
       </div>

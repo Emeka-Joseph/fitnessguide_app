@@ -6,14 +6,14 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     user_fname = db.Column(db.String(100),nullable=False)
     user_lname = db.Column(db.String(100),nullable=False)
-    gender= db.Column(db.String(100),nullable=False)
+    #gender= db.Column(db.String(100),nullable=False)
     user_email = db.Column(db.String(120), unique=True) 
-    user_phone=db.Column(db.String(120),nullable=True) 
+    """user_phone=db.Column(db.String(120),nullable=True) """
     user_datereg=db.Column(db.DateTime(), default=datetime.utcnow)
     user_pwd=db.Column(db.String(120),nullable=False)
-    social_rs = db.Column(db.Float,nullable=True)
+    """social_rs = db.Column(db.Float,nullable=True)
     sed_ls = db.Column(db.Float,nullable=True)
-    sed_lie = db.Column(db.Integer,nullable=True)
+    sed_lie = db.Column(db.Integer,nullable=True)"""
     
 
 
@@ -30,9 +30,10 @@ class Payment(db.Model):
     pay_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     #pay_donid = db.Column(db.Integer, db.ForeignKey('donation.don_id'),nullable=True)
     pay_date = db.Column(db.DateTime(),default=datetime.utcnow)
-    pay_amount = db.Column(db.Float)
-    pay_status = db.Column(db.Enum('pending','failed','paid'), nullable=False, server_default=('pending'))
-    pay_ref = db.Column(db.String(20),nullable=False)
+    pay_amount = db.Column(db.Integer)
+    pay_name = db.Column(db.String(120), nullable=False)
+    narration = db.Column(db.String(255),nullable=False)
+    pay_pop = db.Column(db.String(120), nullable=False)
     pay_userid = db.Column(db.Integer,db.ForeignKey('users.user_id'), nullable=True)
 
 
@@ -40,6 +41,7 @@ class Voucher(db.Model):
     voucher_id = db.Column(db.Integer, primary_key=True)
     voucher_code = db.Column(db.String(15), unique=True, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
+    voucher_userid = db.Column(db.String(150),nullable=True)
 
 class Employment(db.Model):
     q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
@@ -111,6 +113,7 @@ class Readjustment(db.Model):
 
 class Results(db.Model):
     res_sl_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
+    order_by = db.desc(res_sl_id)
     employment = db.Column(db.Integer,nullable=True)
     environment = db.Column(db.Integer,nullable=True)
     lifestyle = db.Column(db.Integer,nullable=True)

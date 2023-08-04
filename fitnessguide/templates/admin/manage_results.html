@@ -4,69 +4,42 @@
 <div class="row" style="display: flex; justify-content: center; background-color:  rgb(3, 3, 93);">
     <div class="col-md-10" id="result_column" >
         <h4 class="my-5" style="color: white;">The List below contains all the users' RESULTS on the platform </h4>  
+
+        <table class="table table-bordered mt-5" style="color: white; text-decoration-color: white;">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Employment</th>
+                    <th>Environment</th>
+                    <th>Lifestyle</th>
+                    <th>Personality</th>
+                    <th>Relationship</th>
+                    <th>Symptoms</th>
+                    <th>Social</th>
+                    <th>Sed_Life</th>
+                    <th>Date (yy-mm-dd h:m:s)</th>
+                    <th>User_ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in allresults | sort(attribute='date', reverse=true) %}
+                <tr>
+                    <td class="cat">{{ loop.index }}</td>
+                    <td class="cat">{{ r.employment }}</td>
+                    <td class="cat">{{ r.environment }}</td>
+                    <td class="cat">{{ r.lifestyle }}</td>
+                    <td class="cat">{{ r.personality }}</td>
+                    <td class="cat">{{ r.relationship }}</td>
+                    <td class="cat">{{ r.symptoms }}</td>
+                    <td class="cat">{{ r.social }}</td>
+                    <td class="cat">{{ r.sed_life_conval }}</td>
+                    <td class="cat">{{ r.date }}</td>
+                    <td class="cat">{{ r.user_id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         
-        <!--  <iframe width="640" height="360" src="https://www.youtube.com/embed/18xR0q3D_uo" title="24/7 EHYAA YAA TONGUES OF FIRE || PASTOR CHRIS OYAKHILOME AND VICTORIA ORENZE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  
-            <div class="jsx-913c98dfe0be4dac player-wrapper">
-            <div class="react-player" style="object-fit: fill; width: 100%; height: 100%;">
-                <video preload="auto" controls="" src=" {{url_for('static',filename='ADA - YAHWEH Live at JoshuaVille Lagos  (with lyrics)_low.mp4')}} " style="width: 100%; height: 100%;">
-                </video>
-            
-            </div>
-        </div> -->
-
-       
-
-        <div>
-            <iframe width="550" height="314" src="https://www.youtube.com/embed/vidid?modestbranding=1&amp;rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-
-            <iframe width="853" height="480" src="https://www.youtube.com/embed/18xR0q3D_uo?modestbranding=1&;rel=0&;showinfo=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-        </div>
-        
-        <!--
-
-            <iframe width="853" height="480" src="https://www.youtube.com/embed/18xR0q3D_uo" title="24/7 EHYAA YAA TONGUES OF FIRE || PASTOR CHRIS OYAKHILOME AND VICTORIA ORENZE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        -->
-
-            <table class="table table-bordered mt-5" style="color: white; text-decoration-color: white;">
-                <thead>
-                    <tr>
-                        <th>Serial</th>
-                        <th>Employment</th>
-                        <th>Environment </th> 
-                        <th>Lifestyle</th>
-                        <th>personality</th>
-                        <th>Relationship</th>
-                        <th>Symptoms</th>
-                        <th>Social</th>
-                        <th>Sed_Life</th>
-                        <th>Date (yy-mm-dd h:m:s)</th>
-                        <th>User_ID</th>
-
-
-                    </tr>
-                </thead>
-                <tbody>
-                   
-                    {% for r in allresults %}
- 
-                    <tr >
-                        <td class="cat">{{ loop.index }}</td>
-                        <td class="cat"> {{r.employment}}  </td>
-                        <td class="cat"> {{r.environment}}  </td>
-                        <td class="cat"> {{r.lifestyle}}  </td>
-                        <td class="cat"> {{r.personality}}  </td>
-                        <td class="cat"> {{r.relationship}}  </td>
-                        <td class="cat"> {{r.symptoms}}  </td>
-                        <td class="cat"> {{r.social}}  </td>
-                        <td class="cat"> {{r.sed_life_conval}}  </td>
-                        <td class="cat"> {{r.date}}  </td>
-                        <td class="cat"> {{r.user_id}}  </td>
-                        
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
 
     </div>
 </div> 

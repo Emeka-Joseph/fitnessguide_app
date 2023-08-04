@@ -1,22 +1,19 @@
 {% extends 'admin/admin_index.html' %}
 
 {% block dash %} 
-<div class="row" style="display: flex; justify-content: center; background-color:  rgb(3, 3, 93);">
-    <div class="col-md-10" id="result_column" >
-        <h4 class="my-5" style="color: white;">The List below contains all the users on the platform </h4>    
-            <table class="table table-bordered mt-5" style="color: white">
 
-                <button class="btn btn-danger" onclick="
-                    var name = prompt('What is your name?')
-                    alert('Welcome Dear ' + name)
-                    ">just Click Me</button>
+        <h4 class="my-5" style="color: white;">The List below contains all the users on the platform </h4> 
+        
+        <div class="table-container">
+
+            <table class="table table-bordered mt-5 table-responsive" style="color: white">
                 <thead>
                     <tr>
                         <th>Serial</th>
+                        <th>User_ID</th>
                         <th>First Name</th>
                         <th>Last Name</th> 
                         <th>Email Address</th>
-                        <th>Phone Number</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,17 +22,20 @@
  
                     <tr >
                         <td class="cat">{{ loop.index }}</td>
+                        <td class="cat">{{i.user_id}}</td>
                         <td class="cat"> {{i.user_fname}}  </td>
                         <td class="cat"> {{i.user_lname}}  </td>
                         <td class="cat"> {{i.user_email}}  </td>
-                        <td class="cat"> {{i.user_phone}}  </td>
+                        
+                        <!--   <td><a href="{{url_for('delete',id=i.user_id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Do you really want to delete this user?')"> <i class="fa fa-trash">Delete</i></a></td> -->
                     </tr>
                     {% endfor %}
 
                 </tbody>
             </table>
+        </div>
+            
 
-    </div>
-</div> 
+   
 {% endblock %}
 
