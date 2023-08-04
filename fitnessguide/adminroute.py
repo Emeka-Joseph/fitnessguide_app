@@ -1,9 +1,8 @@
 import os,random
 from flask import render_template, redirect, flash, session, request, url_for
-from fitnessguide.models import Admin,Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher,Payment, Readjustment,Sed_Lifestyle,Results,Contact
+from fitnessguide.models import Admin,Users, Voucher,Payment,Results,Contact
 from fitnessguide import app, db
-from fitnessguide.forms import AdminLoginForm, ContactForm
-from werkzeug.security import generate_password_hash, check_password_hash
+from fitnessguide.forms import AdminLoginForm
 from sqlalchemy.sql import text
 from sqlalchemy import desc,asc,or_,func
 from datetime import datetime
@@ -34,8 +33,6 @@ def generate_voucher():
             voucher = Voucher(voucher_code=voucher_code, date=date)
             db.session.add(voucher)
             db.session.commit()
-
-    #return render_template('admin/admin_index.html')
     return redirect(url_for('manage_payment'))
 
 
@@ -48,7 +45,6 @@ def AdminLogin():
         if form.validate_on_submit:
             email = form.email.data
             password = form.password.data
-            #deets = db.session.query(Users).filter(Users.user_email==email).first()
             if email !="" and password !="":
                 admin = db.session.query(Admin).filter(Admin.admin_email==email).first() 
                 if admin !=None:

@@ -1,7 +1,7 @@
 import os,random
 from datetime import datetime
 from flask import render_template, redirect, flash, session, request, url_for
-from fitnessguide.models import Users, Employment,Environment,Lifestyle,Personality,Relationship,Symptoms,Categories, Voucher,Readjustment,Sed_Lifestyle,Results,Contact,Payment
+from fitnessguide.models import Users, Voucher,Results,Contact,Payment
 from fitnessguide import app, db
 from fitnessguide.forms import LoginForm, SignUpForm, ContactForm
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,7 +10,6 @@ from sqlalchemy.sql import text
 from sqlalchemy import desc,asc,or_,func
 
 import string
-
 
 
 def generate_name(): 
@@ -74,15 +73,11 @@ def signup():
                 user_pwd = hashed_password, gender='',user_phone='',social_rs='',sed_ls='',sed_lie='')
                 db.session.add(new_user)
                 db.session.commit()
-                #userid = new_user.user_id
-                #session['loggedin']=userid
                 flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
                 return redirect(url_for('login'))
             else:
                 flash('You must fill the form correctly to signup and check that your password matched', "danger")
                 return redirect(url_for('signup'))
-
-    
 
 
 @app.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
@@ -94,7 +89,6 @@ def login():
         if form.validate_on_submit:
             email = form.email.data
             password = form.password.data
-            #deets = db.session.query(Users).filter(Users.user_email==email).first()
             if email !="" and password !="":
                 user = db.session.query(Users).filter(Users.user_email==email).first() 
                 if user !=None:
@@ -538,15 +532,13 @@ def payment():
                 if ext.lower() in allowed:
                     newname = generate_name()+ext
                     file.save("fitnessguide/static/uploads/"+newname)
-                    #dpid = db.session.query(Users).get(session['loggedin'])
-
                     payment_update = Payment(pay_name=p_name,pay_amount=amount,narration=narration,pay_pop=newname,pay_userid=cid)
                     db.session.add(payment_update)
                     db.session.commit()
                     flash('File uploaded successfully','success')
                     return redirect(url_for('payment'))
                 else:
-                        return 'File extension not allowed ','danger'
+                    return 'File extension not allowed ','danger'
             else:
                 flash('Please chose a file','warning')
 
@@ -688,3 +680,9 @@ def internalerror(error):
     return render_template('users/error500.html',alluser=alluser, error=error),500
 
 
+@app.errorhandler(505)
+def internalerror(error):
+    cid = session['loggedin']
+    alluser = db.session.query(Users).filter(Users.user_id==cid).first()
+    ''' For you to see this in action, ensure the debug mode is set to False'''
+    return render_template('users/error500.html',alluser=alluser, error=error),505

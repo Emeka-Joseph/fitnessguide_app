@@ -6,18 +6,10 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     user_fname = db.Column(db.String(100),nullable=False)
     user_lname = db.Column(db.String(100),nullable=False)
-    #gender= db.Column(db.String(100),nullable=False)
     user_email = db.Column(db.String(120), unique=True) 
-    """user_phone=db.Column(db.String(120),nullable=True) """
     user_datereg=db.Column(db.DateTime(), default=datetime.utcnow)
     user_pwd=db.Column(db.String(120),nullable=False)
-    """social_rs = db.Column(db.Float,nullable=True)
-    sed_ls = db.Column(db.Float,nullable=True)
-    sed_lie = db.Column(db.Integer,nullable=True)"""
     
-
-
-
 
 class Admin(db.Model):
     admin_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
@@ -28,7 +20,6 @@ class Admin(db.Model):
 
 class Payment(db.Model):
     pay_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    #pay_donid = db.Column(db.Integer, db.ForeignKey('donation.don_id'),nullable=True)
     pay_date = db.Column(db.DateTime(),default=datetime.utcnow)
     pay_amount = db.Column(db.Integer)
     pay_name = db.Column(db.String(120), nullable=False)
@@ -42,74 +33,6 @@ class Voucher(db.Model):
     voucher_code = db.Column(db.String(15), unique=True, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     voucher_userid = db.Column(db.String(150),nullable=True)
-
-class Employment(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Environment(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Lifestyle(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Personality(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-    
-class Relationship(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    iten = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Symptoms(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Step2(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    qstn_option = db.Column(db.String(20),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Step3(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    questions = db.Column(db.String(255),nullable=False)
-    qstn_option = db.Column(db.String(20),nullable=False)
-    qstn_value = db.Column(db.Integer, nullable=True)
-
-class Sed_Lifestyle(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    item = db.Column(db.String(255),nullable=False)
-    no_hrs = db.Column(db.String(20),nullable=False)
-    converted_value = db.Column(db.Float, nullable=True)
-
-class Social(db.Model):
-    q_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    life_event = db.Column(db.String(255),nullable=False)
-    qstn_value = db.Column(db.Integer,nullable=False)
-
-
-
-class Categories(db.Model):
-    cat_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    cat_name = db.Column(db.String(1000),nullable=False)
-    cat_point = db.Column(db.String(100),nullable=True)
-    total_score = db.Column(db.Integer,nullable=True)
-
-class Readjustment(db.Model):
-    srs_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
-    srs_name = db.Column(db.String(255),nullable=False)
-    srs_score = db.Column(db.Float,nullable=True)
-
-
 
 class Results(db.Model):
     res_sl_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
@@ -125,12 +48,6 @@ class Results(db.Model):
     sed_life_conval = db.Column(db.Float,nullable=True)
     date = db.Column(db.DateTime(),default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'),nullable=True)
-
-
-
-
-
-
 
 
 class Contact(db.Model):
